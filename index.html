@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal VIP - Daily Updates</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 min-h-screen">
+    
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 w-full max-w-md animate-pulse">
+            <div class="text-center mb-8">
+                <div class="w-24 h-24 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-4 animate-spin-slow"></div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">Signal VIP</h1>
+            </div>
+            <input type="tel" id="phone" placeholder="📱 Mobile Number" class="w-full p-4 bg-white/10 border border-white/20 rounded-2xl mb-4 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-purple-500/50">
+            <input type="password" id="password" placeholder="🔒 Password" class="w-full p-4 bg-white/10 border border-white/20 rounded-2xl mb-4 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-purple-500/50">
+            <input type="text" id="specialCode" placeholder="🎫 Special Code" class="w-full p-4 bg-white/10 border border-white/20 rounded-2xl mb-6 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-purple-500/50">
+            <button onclick="loginUser()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all duration-300">🚀 ENTER VIP</button>
+            <p id="loginError" class="text-red-400 mt-4 hidden">❌ Invalid credentials</p>
+        </div>
+    </div>
+
+    <!-- Main App (Hidden initially) -->
+    <div id="mainApp" class="hidden min-h-screen p-4">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 bg-clip-text text-transparent animate-pulse">🔔 SIGNAL VIP</h1>
+                <p class="text-white/70 text-sm">Daily Exclusive Updates</p>
+            </div>
+            <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/40 text-white px-4 py-2 rounded-xl backdrop-blur-sm border border-red-500/30 transition-all">🚪 Logout</button>
+        </div>
+
+        <!-- Daily Post Section -->
+        <div id="dailyPostSection" class="mb-12">
+            <div id="newUpdateSoon" class="text-center py-12">
+                <div class="w-32 h-32 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mx-auto mb-6 animate-bounce"></div>
+                <h2 class="text-2xl font-bold text-yellow-400 mb-4">⭐ NEW UPDATE SOON</h2>
+                <p class="text-white/70">Stay tuned for today's exclusive signal!</p>
+            </div>
+            <div id="todayPost" class="hidden bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20 animate-slideInUp">
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
+                        <span class="text-xl">🔔</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-xl text-white mb-2">Today's VIP Signal</h3>
+                        <p id="postText" class="text-white/90 mb-4 text-lg"></p>
+                        <img id="postImage" class="w-full rounded-2xl max-h-64 object-cover hidden" alt="Post Image">
+                    </div>
+                </div>
+                <div class="flex gap-4 mb-6">
+                    <button onclick="reactToPost('like')" class="react-btn bg-blue-500/20 hover:bg-blue-500/40 p-3 rounded-2xl flex items-center gap-2">
+                        👍 <span id="likeCount">12</span>
+                    </button>
+                    <button onclick="reactToPost('love')" class="react-btn bg-red-500/20 hover:bg-red-500/40 p-3 rounded-2xl flex items-center gap-2">
+                        ❤️ <span id="loveCount">8</span>
+                    </button>
+                </div>
+                <div id="reactUsers" class="text-xs text-white/60 mb-4"></div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="mb-12">
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">📜 History <span class="text-sm text-yellow-400">(Past Signals)</span></h3>
+            <div id="historyList" class="space-y-4 max-h-96 overflow-y-auto"></div>
+        </div>
+
+        <!-- Channel Section -->
+        <div>
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">🎤 VIP Channel</h3>
+            <div id="channelPosts" class="space-y-4 max-h-96 overflow-y-auto"></div>
+            <div class="flex gap-2 mt-4">
+                <button onclick="followChannel()" id="followBtn" class="bg-green-500/20 hover:bg-green-500/40 text-white px-6 py-2 rounded-xl backdrop-blur-sm border border-green-500/30 transition-all flex-1">👥 Follow (1.2K)</button>
+                <button onclick="refreshChannel()" class="bg-purple-500/20 hover:bg-purple-500/40 text-white px-6 py-2 rounded-xl backdrop-blur-sm border border-purple-500/30 transition-all">🔄 Refresh</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // User-specific initialization
+        window.isAdmin = false;
+        initUserApp();
+    </script>
+</body>
+</html>

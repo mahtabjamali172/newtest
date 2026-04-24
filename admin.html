@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Signal VIP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-black min-h-screen">
+    
+    <!-- Admin Login -->
+    <div id="adminLogin" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-3xl p-12 w-full max-w-md shadow-2xl">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl">⚙️</div>
+                <h1 class="text-3xl font-bold mb-2">Admin Panel</h1>
+            </div>
+            <input type="password" id="adminPass" placeholder="🔑 Admin Password" class="w-full p-4 bg-white/10 border border-white/30 rounded-2xl mb-6 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50">
+            <button onclick="adminLogin()" class="w-full bg-white text-purple-600 py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all duration-300">ENTER ADMIN</button>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard (Hidden) -->
+    <div id="adminDashboard" class="hidden p-6 max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">⚙️ Admin Control</h1>
+                <p class="text-gray-300">Manage VIP Signals & Users</p>
+            </div>
+            <button onclick="logoutAdmin()" class="bg-red-500/20 hover:bg-red-500/40 text-white px-6 py-3 rounded-xl backdrop-blur-sm border border-red-500/30 transition-all">🚪 Logout</button>
+        </div>
+
+        <!-- Create Post -->
+        <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-8 mb-8 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-6">📤 New Daily Post</h2>
+            <textarea id="postTextAdmin" placeholder="Today's VIP Signal..." class="w-full p-4 bg-white/10 border border-white/20 rounded-2xl mb-4 text-white h-24 resize-none focus:outline-none"></textarea>
+            <input type="file" id="postImageAdmin" accept="image/*" class="mb-4 text-white">
+            <div class="flex gap-3 mb-6">
+                <input type="number" id="fakeLikes" placeholder="Fake Likes" class="w-20 p-3 bg-white/10 border border-white/20 rounded-xl text-white">
+                <input type="number" id="fakeLoves" placeholder="Fake Loves" class="w-20 p-3 bg-white/10 border border-white/20 rounded-xl text-white">
+                <input type="number" id="fakeFollowers" placeholder="Fake Channel Followers" class="flex-1 p-3 bg-white/10 border border-white/20 rounded-xl text-white">
+            </div>
+            <button onclick="createPost()" class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-4 px-8 rounded-2xl font-bold hover:scale-105 transition-all">🚀 POST LIVE</button>
+        </div>
+
+        <!-- Special Code Management -->
+        <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-8 mb-8 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-6">🔑 Special Code Settings</h2>
+            <select id="codeDuration" class="p-3 bg-white/10 border border-white/20 rounded-xl text-white mb-4">
+                <option value="1">1 Day</option>
+                <option value="7">7 Days</option>
+                <option value="30">30 Days</option>
+            </select>
+            <button onclick="generateSpecialCode()" class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 px-6 rounded-2xl font-bold mr-4 hover:scale-105">Generate Code</button>
+            <span id="currentCode" class="bg-yellow-500/20 text-yellow-400 px-4 py-2 rounded-xl font-mono"></span>
+        </div>
+
+        <!-- User List -->
+        <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-8 mb-8 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-6">👥 Active Users</h2>
+            <div id="userList" class="space-y-3 max-h-64 overflow-y-auto"></div>
+        </div>
+
+        <!-- Post History -->
+        <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+            <h2 class="text-2xl font-bold text-white mb-6">🗑️ Post History (Delete Forever)</h2>
+            <div id="historyAdmin" class="space-y-3 max-h-64 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        window.isAdmin = true;
+        const ADMIN_PASSWORD = "admin123"; // Change this
+    </script>
+</body>
+</html>
