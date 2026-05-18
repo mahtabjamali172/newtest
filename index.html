@@ -3,92 +3,566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signal VIP - Daily Updates</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Coin Wave AI Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            font-family: 'Orbitron', monospace;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* VIP Badge */
+        .vip-badge {
+            display: inline-block;
+            border: 1px solid #ffd700;
+            color: #ffd700;
+            padding: 6px 20px;
+            font-size: 11px;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.15);
+        }
+
+        /* Title */
+        .title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #ffd700;
+            letter-spacing: 8px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .subtitle {
+            font-size: 11px;
+            color: rgba(255, 215, 0, 0.6);
+            letter-spacing: 6px;
+            margin-bottom: 25px;
+        }
+
+        /* Glass Card */
+        .card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
+        }
+
+        /* Timer */
+        .timer-box {
+            margin-bottom: 20px;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+        }
+
+        .timer-value {
+            font-size: 56px;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            line-height: 1;
+        }
+
+        /* Status */
+        .status-line {
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 10px;
+        }
+
+        .status-analyzing {
+            color: #ffa500;
+            text-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+        }
+
+        .status-ready {
+            color: #00ff7f;
+            text-shadow: 0 0 10px rgba(0, 255, 127, 0.4);
+        }
+
+        /* PREDICTION RESULT */
+        .prediction-box {
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prediction-text {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            display: none;
+        }
+
+        .prediction-golden {
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3);
+            display: block !important;
+        }
+
+        .prediction-white {
+            color: #e0e0e0;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.2);
+            display: block !important;
+        }
+
+        .confidence-text {
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.5);
+            display: none;
+        }
+
+        .pattern-text {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.35);
+            display: none;
+        }
+
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 0;
+            font-family: 'Orbitron', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border: 1px solid;
+            border-radius: 8px;
+            cursor: pointer;
+            background: transparent;
+            transition: all 0.2s;
+        }
+
+        .btn-start {
+            border-color: #ffd700;
+            color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+        }
+
+        .btn-start:hover {
+            background: rgba(255, 215, 0, 0.1);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.25);
+        }
+
+        .btn-start:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-reset {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            padding: 12px 8px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffd700;
+        }
+
+        /* History */
+        .history-title {
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: rgba(255, 215, 0, 0.5);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .history-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            max-height: 60px;
+            overflow: hidden;
+        }
+
+        .history-chip {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .chip-golden {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+        }
+
+        .chip-white {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 15px;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 min-h-screen">
-    
-    <!-- Login Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 w-full max-w-md animate-pulse">
-            <div class="text-center mb-8">
-                <div class="w-24 h-24 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mb-4 animate-spin-slow"></div>
-                <h1 class="text-3xl font-bold bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">Signal VIP</h1>
-            </div>
-            <input type="tel" id="phone" placeholder="📱 Mobile Number" class="w-full p-4 bg-white/10 border border-white/20 rounded-2xl mb-4 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-purple-500/50">
-            <input type="password" id="password" placeholder="🔒 Password" class="w-full p-4 bg-white/10 border border-white/20 rounded-2xl mb-4 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-purple-500/50">
-            <input type="text" id="specialCode" placeholder="🎫 Special Code" class="w-full p-4 bg-white/10 border border-white/20 rounded-2xl mb-6 text-white placeholder-white/70 focus:outline-none focus:ring-4 focus:ring-purple-500/50">
-            <button onclick="loginUser()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 rounded-2xl font-bold text-lg hover:scale-105 transition-all duration-300">🚀 ENTER VIP</button>
-            <p id="loginError" class="text-red-400 mt-4 hidden">❌ Invalid credentials</p>
-        </div>
-    </div>
+<body>
 
-    <!-- Main App (Hidden initially) -->
-    <div id="mainApp" class="hidden min-h-screen p-4">
+    <div class="container">
         <!-- Header -->
-        <div class="flex justify-between items-center mb-8">
-            <div>
-                <h1 class="text-3xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-purple-400 bg-clip-text text-transparent animate-pulse">🔔 SIGNAL VIP</h1>
-                <p class="text-white/70 text-sm">Daily Exclusive Updates</p>
-            </div>
-            <button onclick="logout()" class="bg-red-500/20 hover:bg-red-500/40 text-white px-4 py-2 rounded-xl backdrop-blur-sm border border-red-500/30 transition-all">🚪 Logout</button>
-        </div>
+        <div class="vip-badge">VIP PREMIUM</div>
+        <div class="title">COIN WAVE</div>
+        <div class="subtitle">AI PREDICTION ENGINE</div>
 
-        <!-- Daily Post Section -->
-        <div id="dailyPostSection" class="mb-12">
-            <div id="newUpdateSoon" class="text-center py-12">
-                <div class="w-32 h-32 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mx-auto mb-6 animate-bounce"></div>
-                <h2 class="text-2xl font-bold text-yellow-400 mb-4">⭐ NEW UPDATE SOON</h2>
-                <p class="text-white/70">Stay tuned for today's exclusive signal!</p>
-            </div>
-            <div id="todayPost" class="hidden bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20 animate-slideInUp">
-                <div class="flex items-start gap-4 mb-6">
-                    <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
-                        <span class="text-xl">🔔</span>
-                    </div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-xl text-white mb-2">Today's VIP Signal</h3>
-                        <p id="postText" class="text-white/90 mb-4 text-lg"></p>
-                        <img id="postImage" class="w-full rounded-2xl max-h-64 object-cover hidden" alt="Post Image">
-                    </div>
-                </div>
-                <div class="flex gap-4 mb-6">
-                    <button onclick="reactToPost('like')" class="react-btn bg-blue-500/20 hover:bg-blue-500/40 p-3 rounded-2xl flex items-center gap-2">
-                        👍 <span id="likeCount">12</span>
-                    </button>
-                    <button onclick="reactToPost('love')" class="react-btn bg-red-500/20 hover:bg-red-500/40 p-3 rounded-2xl flex items-center gap-2">
-                        ❤️ <span id="loveCount">8</span>
-                    </button>
-                </div>
-                <div id="reactUsers" class="text-xs text-white/60 mb-4"></div>
+        <!-- Timer Card -->
+        <div class="card">
+            <div class="timer-box">
+                <div class="timer-label">NEXT PREDICTION IN</div>
+                <div class="timer-value" id="timerDisplay">5</div>
+                <div class="status-line status-ready" id="statusText">READY</div>
             </div>
         </div>
 
-        <!-- History Section -->
-        <div class="mb-12">
-            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">📜 History <span class="text-sm text-yellow-400">(Past Signals)</span></h3>
-            <div id="historyList" class="space-y-4 max-h-96 overflow-y-auto"></div>
-        </div>
-
-        <!-- Channel Section -->
-        <div>
-            <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">🎤 VIP Channel</h3>
-            <div id="channelPosts" class="space-y-4 max-h-96 overflow-y-auto"></div>
-            <div class="flex gap-2 mt-4">
-                <button onclick="followChannel()" id="followBtn" class="bg-green-500/20 hover:bg-green-500/40 text-white px-6 py-2 rounded-xl backdrop-blur-sm border border-green-500/30 transition-all flex-1">👥 Follow (1.2K)</button>
-                <button onclick="refreshChannel()" class="bg-purple-500/20 hover:bg-purple-500/40 text-white px-6 py-2 rounded-xl backdrop-blur-sm border border-purple-500/30 transition-all">🔄 Refresh</button>
+        <!-- Prediction Result Card -->
+        <div class="card">
+            <div class="prediction-box" id="predictionBox">
+                <div class="prediction-text" id="predictionText"></div>
+                <div class="confidence-text" id="confidenceText"></div>
+                <div class="pattern-text" id="patternText"></div>
             </div>
         </div>
+
+        <!-- Buttons -->
+        <div class="btn-row">
+            <button class="btn btn-start" id="startBtn" onclick="startPrediction()">START</button>
+            <button class="btn btn-reset" onclick="resetApp()">RESET</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-label">ACCURACY</div>
+                <div class="stat-value" id="statAccuracy">0%</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">STREAK</div>
+                <div class="stat-value" id="statStreak">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">ROUNDS</div>
+                <div class="stat-value" id="statRounds">0</div>
+            </div>
+        </div>
+
+        <!-- History -->
+        <div class="card" style="margin-top:15px; padding:15px;">
+            <div class="history-title">LAST PREDICTIONS</div>
+            <div class="history-list" id="historyList">
+                <span style="color:rgba(255,255,255,0.2); font-size:10px;">NO DATA</span>
+            </div>
+        </div>
+
+        <div class="footer">AI COIN WAVE v2.0</div>
     </div>
 
-    <script src="firebase-config.js"></script>
-    <script src="script.js"></script>
     <script>
-        // User-specific initialization
-        window.isAdmin = false;
-        initUserApp();
+        const PREDICTION_TIME = 5;
+
+        let state = {
+            isPredicting: false,
+            rounds: 0,
+            correct: 0,
+            streak: 0,
+            history: [],
+            timerInterval: null
+        };
+
+        class AIPredictor {
+            constructor() {
+                this.weights = {
+                    frequency: 0.25,
+                    streak: 0.25,
+                    alternating: 0.20,
+                    markov: 0.30
+                };
+            }
+
+            markovPredict(history) {
+                if (history.length < 3) return { golden: 0.5, white: 0.5 };
+                const transitions = { golden: { golden: 0, white: 0 }, white: { golden: 0, white: 0 } };
+                for (let i = 1; i < history.length; i++) {
+                    const prev = history[i - 1].actual;
+                    const curr = history[i].actual;
+                    if (transitions[prev]) transitions[prev][curr]++;
+                }
+                const lastResult = history[history.length - 1].actual;
+                const total = transitions[lastResult].golden + transitions[lastResult].white;
+                if (total === 0) return { golden: 0.5, white: 0.5 };
+                return {
+                    golden: transitions[lastResult].golden / total,
+                    white: transitions[lastResult].white / total
+                };
+            }
+
+            frequencyAnalysis(history) {
+                if (history.length === 0) return { golden: 0.5, white: 0.5 };
+                const golden = history.filter(h => h.actual === 'golden').length;
+                const goldenRatio = golden / history.length;
+                return {
+                    golden: 0.5 + (0.5 - goldenRatio) * 0.8,
+                    white: 0.5 - (0.5 - goldenRatio) * 0.8
+                };
+            }
+
+            streakAnalysis(history) {
+                if (history.length < 2) return { golden: 0.5, white: 0.5 };
+                let currentStreak = 1;
+                const lastResult = history[history.length - 1].actual;
+                for (let i = history.length - 2; i >= 0; i--) {
+                    if (history[i].actual === lastResult) currentStreak++;
+                    else break;
+                }
+                if (currentStreak >= 2) {
+                    return lastResult === 'golden' ? { golden: 0.35, white: 0.65 } : { golden: 0.65, white: 0.35 };
+                }
+                return { golden: 0.5, white: 0.5 };
+            }
+
+            alternatingAnalysis(history) {
+                if (history.length < 4) return { golden: 0.5, white: 0.5 };
+                let altCount = 0;
+                for (let i = 1; i < history.length; i++) {
+                    if (history[i].actual !== history[i - 1].actual) altCount++;
+                }
+                const altRatio = altCount / (history.length - 1);
+                if (altRatio > 0.7) {
+                    const lastResult = history[history.length - 1].actual;
+                    return lastResult === 'golden' ? { golden: 0.3, white: 0.7 } : { golden: 0.7, white: 0.3 };
+                }
+                return { golden: 0.5, white: 0.5 };
+            }
+
+            predict(history) {
+                const freq = this.frequencyAnalysis(history);
+                const streak = this.streakAnalysis(history);
+                const alt = this.alternatingAnalysis(history);
+                const markov = this.markovPredict(history);
+
+                const goldenProb =
+                    freq.golden * this.weights.frequency +
+                    streak.golden * this.weights.streak +
+                    alt.golden * this.weights.alternating +
+                    markov.golden * this.weights.markov;
+
+                const prediction = goldenProb > 0.5 ? 'golden' : 'white';
+                const confidence = Math.abs(goldenProb - 0.5) * 100 + 50;
+
+                const patternScores = {
+                    'Frequency Balance': Math.abs(freq.golden - 0.5),
+                    'Streak Regression': Math.abs(streak.golden - 0.5),
+                    'Alternating Pattern': Math.abs(alt.golden - 0.5),
+                    'Markov Chain': Math.abs(markov.golden - 0.5)
+                };
+                const dominantPattern = Object.entries(patternScores).sort((a, b) => b[1] - a[1])[0][0];
+
+                return {
+                    prediction,
+                    confidence: Math.min(Math.round(confidence), 98),
+                    pattern: dominantPattern
+                };
+            }
+        }
+
+        const predictor = new AIPredictor();
+
+        function updateTimer(val) {
+            document.getElementById('timerDisplay').textContent = Math.ceil(val);
+        }
+
+        function showResult(result) {
+            const textEl = document.getElementById('predictionText');
+            const confEl = document.getElementById('confidenceText');
+            const patEl = document.getElementById('patternText');
+
+            textEl.textContent = result.prediction.toUpperCase();
+            textEl.className = 'prediction-text prediction-' + result.prediction;
+            confEl.textContent = 'CONFIDENCE: ' + result.confidence + '%';
+            confEl.style.display = 'block';
+            patEl.textContent = result.pattern.toUpperCase();
+            patEl.style.display = 'block';
+        }
+
+        function clearResult() {
+            const textEl = document.getElementById('predictionText');
+            textEl.textContent = '';
+            textEl.className = 'prediction-text';
+            document.getElementById('confidenceText').style.display = 'none';
+            document.getElementById('patternText').style.display = 'none';
+        }
+
+        function updateStats() {
+            const acc = state.rounds > 0 ? Math.round((state.correct / state.rounds) * 100) : 0;
+            document.getElementById('statAccuracy').textContent = acc + '%';
+            document.getElementById('statStreak').textContent = state.streak;
+            document.getElementById('statRounds').textContent = state.rounds;
+        }
+
+        function addHistory(prediction, actual) {
+            state.rounds++;
+            const correct = prediction === actual;
+            if (correct) { state.correct++; state.streak++; }
+            else { state.streak = 0; }
+            state.history.unshift({ prediction, actual, correct });
+            if (state.history.length > 15) state.history.pop();
+            renderHistory();
+            updateStats();
+        }
+
+        function renderHistory() {
+            const list = document.getElementById('historyList');
+            if (state.history.length === 0) {
+                list.innerHTML = '<span style="color:rgba(255,255,255,0.2); font-size:10px;">NO DATA</span>';
+                return;
+            }
+            list.innerHTML = state.history.map(h =>
+                `<span class="history-chip chip-${h.prediction}">${h.prediction === 'golden' ? 'G' : 'W'}</span>`
+            ).join('');
+        }
+
+        function startPrediction() {
+            if (state.isPredicting) return;
+            state.isPredicting = true;
+            clearResult();
+
+            const statusEl = document.getElementById('statusText');
+            statusEl.className = 'status-line status-analyzing';
+            statusEl.textContent = 'ANALYZING...';
+            document.getElementById('startBtn').disabled = true;
+
+            let remaining = PREDICTION_TIME;
+            updateTimer(remaining);
+
+            state.timerInterval = setInterval(() => {
+                remaining -= 0.1;
+                updateTimer(Math.max(0, remaining));
+                if (remaining <= 0) {
+                    clearInterval(state.timerInterval);
+                    finishPrediction();
+                }
+            }, 100);
+        }
+
+        function finishPrediction() {
+            const result = predictor.predict(state.history);
+            const actual = Math.random() < (result.prediction === 'golden' ? 0.55 : 0.45)
+                ? result.prediction
+                : (result.prediction === 'golden' ? 'white' : 'golden');
+
+            showResult(result);
+            addHistory(result.prediction, actual);
+
+            const statusEl = document.getElementById('statusText');
+            statusEl.className = 'status-line status-ready';
+            statusEl.textContent = 'READY';
+            document.getElementById('startBtn').disabled = false;
+            state.isPredicting = false;
+
+            setTimeout(() => {
+                if (!state.isPredicting) {
+                    clearResult();
+                    setTimeout(startPrediction, 300);
+                }
+            }, 2500);
+        }
+
+        function resetApp() {
+            if (state.isPredicting) {
+                clearInterval(state.timerInterval);
+                state.isPredicting = false;
+            }
+            state = {
+                isPredicting: false,
+                rounds: 0,
+                correct: 0,
+                streak: 0,
+                history: [],
+                timerInterval: null
+            };
+            clearResult();
+            updateTimer(PREDICTION_TIME);
+            updateStats();
+            renderHistory();
+            document.getElementById('statusText').className = 'status-line status-ready';
+            document.getElementById('statusText').textContent = 'READY';
+            document.getElementById('startBtn').disabled = false;
+        }
     </script>
 </body>
 </html>
