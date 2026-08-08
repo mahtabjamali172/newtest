@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WealthNest — Luxury Gold Invest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#C9A227;
+  --green-d:#A67C00;
+  --green-dd:#1C1500;
+  --lime:#FFD700;
+  --lime-soft:#FFE082;
+  --orange:#D4AF37;
+  --orange-d:#B8860B;
+  --gold:#FFC107;
+  --white:#FFFFFF;
+  --card:#FFFDF5;
+  --tint:#FBF3D9;
+  --tint-2:#F3E5A8;
+  --ink:#3A2E0A;
+  --head:#5C4200;
+  --mut:#9A8550;
+  --red:#D64545;
+  --line:#EADCA8;
+  --nav-h:58px;
+  --bn-h:60px;
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Manrope',system-ui,sans-serif;background:linear-gradient(180deg,#C9A227 0%, #A67C00 55%, #7A5A00 100%);color:var(--ink);font-size:14px;line-height:1.45;overflow-x:hidden}
+input,select,textarea,button{font-family:inherit}
+button{cursor:pointer;border:none;background:none}
+a{color:inherit;text-decoration:none}
+
+#toasts{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:8px;width:min(92vw,360px)}
+.toast{display:flex;align-items:center;gap:10px;background:#fff;color:#333;border-radius:12px;padding:11px 14px;font-size:13px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.25);animation:toastIn .3s ease;border-left:4px solid var(--green)}
+.toast.error{border-left-color:var(--red)}
+.toast.info{border-left-color:var(--gold)}
+.toast.out{opacity:0;transform:translateY(-8px);transition:.3s}
+.toast .t-ic{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;background:var(--green);font-size:13px;flex:0 0 auto}
+.toast.error .t-ic{background:var(--red)}
+.toast.info .t-ic{background:var(--gold);color:#6b4a00}
+@keyframes toastIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+
+#authScreen{min-height:100dvh;display:flex;align-items:center;justify-content:center;background:linear-gradient(165deg,#C9A227 0%,#A67C00 60%,#6B4E00 100%);padding:24px 16px;position:relative;overflow:hidden}
+#authScreen::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.18),transparent 42%),radial-gradient(circle at 85% 80%,rgba(255,215,0,.14),transparent 40%)}
+.auth-card{position:relative;width:100%;max-width:400px;background:var(--card);border-radius:26px;box-shadow:0 24px 60px rgba(60,40,0,.45);padding:28px 24px 24px;animation:cardUp .5s ease;border:1px solid rgba(0,0,0,.06)}
+@keyframes cardUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.auth-head{text-align:center;margin-bottom:20px}
+.logo-wrap{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:10px}
+.logo-mark{width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#C9A227,#7A5A00);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 8px 22px rgba(150,110,0,.45)}
+.logo-mark svg{width:32px;height:32px}
+.logo-mark::after{content:"";position:absolute;inset:-5px;border-radius:22px;border:2px solid rgba(255,215,0,.55);animation:ringPulse 2.4s ease-out infinite}
+@keyframes ringPulse{0%{transform:scale(.9);opacity:.9}70%{transform:scale(1.28);opacity:0}100%{opacity:0}}
+.brand-name{font-size:25px;font-weight:900;color:var(--head);letter-spacing:-.5px}
+.brand-name em{font-style:normal;color:var(--green)}
+.brand-sub{font-size:10.5px;font-weight:800;color:var(--green-d);text-transform:uppercase;letter-spacing:3px}
+.auth-tag{font-size:13px;color:var(--mut);font-weight:600;margin-top:4px}
+.tabs{display:flex;background:var(--tint-2);border-radius:14px;padding:4px;margin-bottom:16px}
+.tab{flex:1;padding:10px;border-radius:11px;font-weight:800;font-size:13.5px;color:var(--mut);transition:.2s}
+.tab.active{background:var(--green);color:#fff;box-shadow:0 3px 12px rgba(201,162,39,.4)}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11.5px;font-weight:800;color:var(--head);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.field input,.field select{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:30px;background:#fff;font-size:14px;color:var(--ink);outline:none;transition:.2s}
+.field input:focus,.field select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(201,162,39,.14)}
+.field select{-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234CAF50' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:30px;transition:.2s;border:none}
+.btn-block{width:100%}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 6px 16px rgba(201,162,39,.35)}
+.btn-green:hover{background:var(--green-d)}
+.btn-orange{background:var(--orange);color:#fff;box-shadow:0 6px 16px rgba(255,152,0,.35)}
+.btn-orange:hover{background:var(--orange-d)}
+.btn-ghost{background:#fff;border:2px solid var(--line);color:var(--head)}
+.auth-sub{text-align:center;font-size:11.5px;color:var(--mut);margin-top:14px}
+.auth-sub b{color:var(--green)}
+.hidden{display:none!important}
+
+#app{display:none;min-height:100dvh}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:#C9A227;display:flex;align-items:center;justify-content:space-between;padding:0 13px;z-index:100;box-shadow:0 2px 14px rgba(60,40,0,.35)}
+.burger{width:34px;height:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.burger i{display:block;width:20px;height:2.5px;background:#fff;border-radius:2px}
+.tb-brand{flex:1;display:flex;align-items:center;justify-content:center;gap:8px}
+.tb-logo{width:32px;height:32px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;position:relative}
+.tb-logo svg{width:18px;height:18px}
+.tb-name{color:#fff;font-weight:900;font-size:19px;letter-spacing:-.3px}
+.tb-name small{display:block;font-size:8px;font-weight:800;letter-spacing:2.5px;color:#F7E8B0;opacity:.95}
+.bell{width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:#fff}
+.bell svg{width:18px;height:18px}
+
+.drawer-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;display:none;align-items:stretch}
+.drawer-ov.open{display:flex}
+.drawer{width:280px;max-width:82vw;background:#FFFDF5;height:100%;overflow-y:auto;padding:18px 14px 24px;animation:drawerIn .28s ease;border-right:3px solid var(--green)}
+@keyframes drawerIn{from{transform:translateX(-100%)}to{transform:none}}
+.dr-head{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.dr-logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#C9A227,#7A5A00);display:flex;align-items:center;justify-content:center;color:#fff;flex:0 0 auto}
+.dr-logo svg{width:20px;height:20px}
+.dr-head b{font-size:16px;font-weight:900;color:var(--head);display:block}
+.dr-head small{font-size:9.5px;color:var(--mut);font-weight:800;letter-spacing:2px}
+.dr-item{display:flex;align-items:center;gap:12px;padding:13px 10px;border-radius:12px;font-size:14px;font-weight:800;color:var(--ink);cursor:pointer;transition:.15s}
+.dr-item:hover{background:var(--tint)}
+.dr-item svg{width:19px;height:19px;color:var(--green-d);flex:0 0 auto}
+.dr-item.logout{color:var(--red);margin-top:10px;border-top:1px solid var(--line);border-radius:0;padding-top:16px}
+.dr-item.logout svg{color:var(--red)}
+
+.hero-banner{position:relative;margin:calc(var(--nav-h) + 8px) 0 0;height:150px;overflow:hidden}
+.hero-banner img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.5))}
+
+.upd-strip{margin:12px;display:flex;align-items:center;justify-content:center;gap:8px;background:#FBF6E0;border:1px solid #EADCA8;border-radius:30px;padding:10px 16px}
+.upd-strip svg{width:18px;height:18px;color:var(--green)}
+.upd-strip span{font-weight:800;font-size:12px;letter-spacing:1px;color:#222}
+.upd-strip .flags{font-size:13px;margin-left:4px}
+
+.action-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 12px;margin-bottom:18px}
+.act{background:rgba(0,0,0,.28);border:1px solid rgba(0,0,0,.3);border-radius:16px;padding:14px 4px;display:flex;flex-direction:column;align-items:center;gap:8px;color:#fff}
+.act-ic{width:46px;height:46px;border-radius:50%;background:var(--lime);border:2px solid #000;display:flex;align-items:center;justify-content:center;color:#3A2E0A;box-shadow:0 3px 0 #000}
+.act-ic svg{width:22px;height:22px}
+.act-ic .team-txt{font-weight:900;font-size:11px;letter-spacing:1px}
+.act span{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+
+.main{position:relative;padding:6px 12px calc(var(--bn-h) + 22px)}
+.page{display:none}
+.page.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.sect-title{font-size:15px;font-weight:900;color:#fff;margin:6px 2px 10px;display:flex;align-items:center;gap:8px;text-shadow:0 2px 4px rgba(90,60,0,.45)}
+.sect-title svg{width:18px;height:18px;flex:0 0 auto}
+
+.dash-card{background:#FFFDF5;border-radius:26px;box-shadow:0 10px 30px rgba(90,60,0,.22);padding:20px 18px;margin-top:4px}
+.bal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.bal-label{font-size:11px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:1.5px}
+.bal-actions{display:flex;gap:8px}
+.bal-actions .btn{padding:8px 14px;font-size:11px}
+.bal-amount{font-size:36px;font-weight:900;color:var(--head);letter-spacing:-1px;margin-bottom:14px}
+.team-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;border-top:1.5px dashed var(--tint-2);padding-top:14px;text-align:center}
+.team-stats .ts b{display:block;font-size:15px;font-weight:900;color:var(--head)}
+.team-stats .ts span{font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+.hero-active{margin-top:14px;background:var(--tint);border-radius:16px;padding:14px}
+.hero-active .ha-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.hero-active .ha-row b{font-size:13px;color:var(--head)}
+
+.menu-list{margin-top:16px}
+.menu-item{display:flex;align-items:center;gap:14px;padding:14px 8px;border-bottom:1px solid var(--tint-2);cursor:pointer}
+.menu-item .mi-ic{width:22px;height:22px;color:var(--green);flex:0 0 auto}
+.menu-item .mi-ic svg{width:22px;height:22px}
+.menu-item b{flex:1;font-size:14.5px;color:var(--head);text-align:left;font-weight:700}
+.menu-item .mi-arr{color:#C0CFC0}
+
+.plans-wrap{display:flex;flex-direction:column;gap:16px;padding-top:4px}
+.plan-group{width:100%}
+.plan-card{background:#000;border-radius:14px;padding:18px 16px;position:relative;overflow:hidden;min-height:130px;box-shadow:0 8px 22px rgba(0,0,0,.35);color:#fff}
+.plan-card .p-left{position:relative;z-index:2}
+.plan-title{font-size:26px;font-weight:900;color:#fff;display:flex;align-items:center;gap:8px;letter-spacing:-.5px}
+.plan-title .leaf{color:var(--lime);font-size:18px}
+.plan-info{font-size:14px;color:#E0E0E0;margin-top:6px;font-weight:600}
+.plan-info .g{color:var(--lime)}
+.plan-buy{font-size:13px;color:#BBB;margin-top:4px;font-weight:700;letter-spacing:.3px}
+.plan-card .p-right{position:absolute;right:0;top:0;bottom:0;width:46%;pointer-events:none}
+.plan-card .p-right img{width:100%;height:100%;object-fit:cover;object-position:right center}
+.plan-overlay{position:absolute;right:10px;bottom:8px;font-size:24px;font-weight:900;letter-spacing:2px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6);z-index:3}
+.plan-overlay .n{color:var(--lime)}
+.purchase-btn{display:block;margin:10px auto 0;width:70%;background:var(--orange);border:3px solid #B26A00;border-radius:50px;padding:12px;font-size:17px;font-weight:900;letter-spacing:1.5px;color:#fff;text-transform:uppercase;box-shadow:0 4px 0 #8B5E02;transition:.15s}
+.purchase-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #8B5E02}
+.plan-note{text-align:center;color:#fff;font-size:12px;font-weight:600;margin-top:8px;opacity:.85}
+
+.form-card{background:#FFFDF5;border-radius:24px;box-shadow:0 10px 30px rgba(90,60,0,.22);padding:20px}
+.form-card h3{font-size:18px;font-weight:900;color:var(--head);margin-bottom:4px}
+.form-card .sub{font-size:12px;color:var(--mut);margin-bottom:16px}
+.pay-box{border:2px solid var(--line);border-radius:18px;padding:14px;margin-bottom:16px}
+.pay-box .pb-label{font-size:10px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.pay-rows{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pay-num{display:flex;align-items:center;gap:8px;background:#f4f4f4;border:1.5px solid #ddd;border-radius:30px;padding:8px 12px;font-weight:800;color:#333;font-size:13px}
+.pay-num .copyic{width:15px;height:15px;color:#888;flex:0 0 auto}
+.pay-note{font-size:11px;color:var(--ink);margin-top:6px}
+.avail{text-align:right;font-size:12px;color:var(--mut);margin-bottom:10px}
+.avail b{color:var(--green)}
+
+.table-card{background:#FFFDF5;border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(90,40,0,.16)}
+.th-head{background:#7A5A00;color:#fff;padding:13px 16px;display:flex;align-items:center;justify-content:space-between}
+.th-head h4{font-size:14px;font-weight:800}
+.th-head .cnt{font-size:11px;opacity:.85}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:480px}
+th{background:var(--tint);color:var(--head);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;text-align:left;padding:11px 14px;white-space:nowrap}
+td{padding:12px 14px;font-size:13px;border-top:1px solid #F7F0D8;vertical-align:middle;white-space:nowrap}
+tr:hover{background:#FFFDF0}
+.t-gold{color:#B8860B;font-weight:800}
+.t-green{color:var(--green-d);font-weight:800}
+.t-red{color:var(--red);font-weight:800}
+.t-mut{color:var(--mut)}
+.pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;font-size:10.5px;font-weight:800;text-transform:capitalize}
+.pill.pending{background:#FFF3E0;color:#B26A00}
+.pill.approved{background:var(--tint);color:var(--green-d)}
+.pill.rejected{background:#FDECEC;color:var(--red)}
+.pill.active{background:var(--tint-2);color:#8A6D00}
+.pill.completed{background:#EEEEEE;color:#666}
+.pay-badge{display:inline-flex;align-items:center;gap:5px;background:var(--tint);color:var(--green-d);font-size:11px;font-weight:800;padding:5px 9px;border-radius:16px;white-space:nowrap}
+.pay-badge em{font-style:normal;opacity:.75;font-weight:700}
+.empty{text-align:center;padding:26px 16px;color:var(--mut);font-size:13px;font-weight:600}
+.empty .big{font-size:34px;display:block;margin-bottom:8px}
+.inv-head{display:flex;justify-content:space-between;font-size:10px;color:var(--mut);margin-bottom:4px}
+.progress{height:6px;background:#F1E7BE;border-radius:10px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--lime),var(--green));border-radius:10px}
+.u-cell{display:flex;align-items:center;gap:9px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.u-meta{line-height:1.2}
+.u-meta .u-name{font-weight:800;color:var(--head);display:block;font-size:13px}
+.u-meta .u-mail{font-size:11px;color:var(--mut);display:block}
+
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:none;align-items:flex-end;justify-content:center}
+.modal-ov.open{display:flex}
+.modal-sheet{background:#fff;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;border-radius:22px 22px 0 0;padding:20px 20px 26px;animation:sheetUp .3s ease}
+@keyframes sheetUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@media(min-width:560px){.modal-ov{align-items:center;padding:20px}.modal-sheet{border-radius:26px}}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-head h3{font-size:18px;font-weight:900;color:var(--head)}
+.modal-head .x{width:32px;height:32px;border-radius:50%;background:var(--tint);color:var(--head);font-size:16px;display:flex;align-items:center;justify-content:center}
+.preview-box{background:linear-gradient(135deg,var(--tint),var(--tint-2));border-radius:16px;padding:16px;margin:14px 0;display:flex;justify-content:space-around;text-align:center}
+.preview-box .pv b{display:block;font-size:17px;font-weight:900;color:var(--head)}
+.preview-box .pv span{font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+.inv-err{color:var(--red);font-size:12px;font-weight:700;min-height:16px;margin:8px 0}
+
+.set-pill{display:flex;justify-content:space-between;align-items:center;background:var(--tint);border-radius:14px;padding:13px 16px;margin-bottom:10px}
+.set-pill span{font-size:11px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:1px}
+.set-pill b{font-size:14px;font-weight:900;color:var(--head)}
+
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--bn-h);background:#fff;display:flex;justify-content:space-around;align-items:center;border-top:1px solid #E0E0E0;z-index:100;box-shadow:0 -4px 18px rgba(0,0,0,.1);padding-bottom:env(safe-area-inset-bottom)}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#9A9A9A;font-size:10px;font-weight:800;transition:.2s;position:relative}
+.bnav-item svg{width:22px;height:22px}
+.bnav-item.active{color:var(--green)}
+.bnav-item.active svg{color:var(--green)}
+.bnav-item.active::before{content:"";position:absolute;top:-1px;width:30px;height:3px;border-radius:0 0 4px 4px;background:var(--green)}
+.bnav-item .dot-badge{position:absolute;top:7px;right:calc(50% - 17px);width:7px;height:7px;border-radius:50%;background:var(--red);border:1.5px solid #fff}
+</style>
+</head>
+<body>
+
+<div id="toasts"></div>
+
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-head">
+      <div class="logo-wrap">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
+      </div>
+      <div class="brand-name">Wealth<em>Nest</em></div>
+      <div class="brand-sub">Green Energy Invest</div>
+      <div class="auth-tag">🚀 Invest in renewable energy & earn daily</div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" id="tabLoginBtn" onclick="switchAuthTab('login')">Login</button>
+      <button class="tab" id="tabRegBtn" onclick="switchAuthTab('register')">Register</button>
+    </div>
+    <form id="loginForm">
+      <div class="field"><label>Email</label><input id="loginEmail" type="email" placeholder="you@email.com" required></div>
+      <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="••••••••" required></div>
+      <button class="btn btn-green btn-block" style="padding:13px">Login</button>
+      <div class="auth-sub">New here? <b style="cursor:pointer" onclick="switchAuthTab('register')">Create an account</b></div>
+    </form>
+    <form id="regForm" class="hidden">
+      <div class="field"><label>Full Name</label><input id="regName" type="text" placeholder="e.g. Ali Khan" required></div>
+      <div class="field"><label>Email</label><input id="regEmail" type="email" placeholder="you@email.com" required></div>
+      <div class="field"><label>Password</label><input id="regPass" type="password" placeholder="Min 6 characters" required></div>
+      <button class="btn btn-orange btn-block" style="padding:13px">Create Account</button>
+      <div class="auth-sub">Have an account? <b style="cursor:pointer" onclick="switchAuthTab('login')">Login here</b></div>
+    </form>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="burger" onclick="toggleDrawer()"><i></i><i></i><i></i></div>
+    <div class="tb-brand">
+      <div class="tb-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg></div>
+      <div class="tb-name">Luxury Brand<small>WealthNest Invest</small></div>
+    </div>
+    <div class="bell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+  </div>
+
+  <div class="hero-banner"><img src="images/hero_banner.png" alt="Invest"></div>
+
+  <div class="upd-strip">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4V2M15 8V6M21 5l-2 2M19 3l-2 2M17 13l-4-4 4-4 4 4-4 4Z"/><path d="M3 17a5 5 0 0 1 5-5h2a5 5 0 0 1 0 10H8"/><path d="M3 21v-4"/></svg>
+    <span>UPDATED VERSION</span><span class="flags">🇵🇰 🇧🇩</span>
+  </div>
+
+  <div class="action-grid">
+    <button class="act" onclick="go('deposit')">
+      <div class="act-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3A2E0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+      <span>Deposit</span>
+    </button>
+    <button class="act" onclick="go('withdraw')">
+      <div class="act-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3A2E0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg></div>
+      <span>Withdraw</span>
+    </button>
+    <button class="act" onclick="go('plans')">
+      <div class="act-ic"><span class="team-txt">PLANS</span></div>
+      <span>Invest</span>
+    </button>
+    <button class="act" onclick="go('settings')">
+      <div class="act-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#3A2E0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01"/></svg></div>
+      <span>My</span>
+    </button>
+  </div>
+
+  <div class="main">
+
+    <section class="page active" id="page-dashboard">
+      <div class="dash-card">
+        <div class="bal-head">
+          <div class="bal-label">Wallet Balance</div>
+          <div class="bal-actions">
+            <button class="btn btn-orange" onclick="go('deposit')">DEPOSIT</button>
+            <button class="btn btn-green" onclick="go('withdraw')">WITHDRAW</button>
+          </div>
+        </div>
+        <div class="bal-amount" id="dashBalance">₨0.00</div>
+        <div class="team-stats">
+          <div class="ts"><b id="dashInvested">₨0.00</b><span>Total Invested</span></div>
+          <div class="ts"><b id="heroTotalProfit">₨0.00</b><span>Total Profit</span></div>
+          <div class="ts"><b id="dashActive">0</b><span>Active Plans</span></div>
+        </div>
+        <div class="hero-active">
+          <div class="ha-row"><b>Today's Profit</b><b id="dashTodayProfit" class="t-green">+₨0.00</b></div>
+          <div class="ha-row" style="margin-bottom:0"><b>Active Investments</b><span class="t-mut" style="font-size:12px" id="heroActiveCount">0 active investments</span></div>
+        </div>
+      </div>
+
+      <div class="sect-title" style="margin:18px 2px 6px">Active Investments</div>
+      <div class="table-card">
+        <div class="th-head"><h4>Running Plans</h4><span class="cnt">Live</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Plan</th><th>Amount</th><th>Daily</th><th>Progress</th><th>Ends</th></tr></thead><tbody id="dashInvBody"></tbody></table></div>
+        <div class="empty" id="dashInvEmpty" style="display:none"><span class="big">🌱</span>No active investments yet.<br>Invest in a plan to start earning daily profit.</div>
+      </div>
+
+      <div class="sect-title" style="margin:18px 2px 6px">Quick Menu</div>
+      <div class="menu-list">
+        <div class="menu-item" onclick="go('plans')"><span class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span><b>Investment Plans</b><span class="mi-arr">›</span></div>
+        <div class="menu-item" onclick="go('investments')"><span class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span><b>Investment History</b><span class="mi-arr">›</span></div>
+        <div class="menu-item" onclick="go('profits')"><span class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span><b>Profit History</b><span class="mi-arr">›</span></div>
+        <div class="menu-item" onclick="go('transactions')"><span class="mi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><b>Transactions</b><span class="mi-arr">›</span></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-plans">
+      <div class="sect-title">Choose Your Plan</div>
+      <div class="plans-wrap" id="plansGrid"></div>
+    </section>
+
+    <section class="page" id="page-investments">
+      <div class="sect-title">My Investments</div>
+      <div class="table-card">
+        <div class="th-head"><h4>All Investments</h4></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Plan</th><th>Amount</th><th>Rate</th><th>Daily</th><th>Start</th><th>End</th><th>Status</th></tr></thead><tbody id="invBody"></tbody></table></div>
+        <div class="empty" id="invEmpty" style="display:none"><span class="big">📊</span>No investments yet.<br>Buy a plan to get started.</div>
+      </div>
+    </section>
+
+    <section class="page" id="page-profits">
+      <div class="sect-title">Profit History</div>
+      <div class="table-card">
+        <div class="th-head"><h4>Earnings</h4><span class="cnt" id="profitCount">0 earnings recorded</span></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Plan</th><th>Amount</th><th>Type</th></tr></thead><tbody id="profitBody"></tbody></table></div>
+        <div class="empty" id="profitEmpty" style="display:none"><span class="big">💰</span>No profits recorded yet.</div>
+      </div>
+    </section>
+
+    <section class="page" id="page-deposit">
+      <div class="sect-title">Deposit Money</div>
+      <div class="form-card">
+        <h3>Send Money</h3>
+        <div class="sub">Transfer funds to our account then submit the request below. Your balance is credited after admin approval.</div>
+        <div class="pay-box">
+          <div class="pb-label">Send money to this address</div>
+          <div class="pay-rows">
+            <div class="pay-num">⚡ Easypaisa <b>0300 1234567</b> <svg class="copyic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+            <div class="pay-num">📱 JazzCash <b>0300 1234567</b></div>
+          </div>
+          <div class="pay-note">Use your payment method below and enter your own account number to receive approval.</div>
+        </div>
+        <form id="depositForm">
+          <div class="field" id="depositWalletField" style="display:none">
+            <label id="depositWalletLabel">Wallet ID / Account</label>
+            <input id="depositWalletId" type="text" placeholder="">
+          </div>
+          <div class="field">
+            <label>Payment Method</label>
+            <select id="depositMethod" onchange="toggleWalletField('deposit')">
+              <option value="">Select method</option>
+              <option value="EasyPaisa">EasyPaisa</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="Bank">Bank Transfer</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Amount</label>
+            <input id="depositAmount" type="number" min="1" placeholder="e.g. 500" required>
+          </div>
+          <button class="btn btn-orange btn-block" style="padding:14px;border:3px solid #B26A00;box-shadow:0 5px 0 #8B5E02">REQUEST DEPOSIT</button>
+        </form>
+      </div>
+
+      <div class="sect-title" style="margin-top:18px">Deposit History</div>
+      <div class="table-card">
+        <div class="th-head"><h4>Requests</h4></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead><tbody id="depBody"></tbody></table></div>
+        <div class="empty" id="depEmpty" style="display:none"><span class="big">💵</span>No deposit requests yet.</div>
+      </div>
+    </section>
+
+    <section class="page" id="page-withdraw">
+      <div class="sect-title">Withdraw Money</div>
+      <div class="form-card">
+        <h3>Request Withdrawal</h3>
+        <div class="avail">Available balance: <b id="wdAvail">₨0.00</b></div>
+        <form id="withdrawForm">
+          <div class="field" id="withdrawWalletField" style="display:none">
+            <label id="withdrawWalletLabel">Wallet ID / Account</label>
+            <input id="withdrawWalletId" type="text" placeholder="">
+          </div>
+          <div class="field">
+            <label>Payment Method</label>
+            <select id="withdrawMethod" onchange="toggleWalletField('withdraw')">
+              <option value="">Select method</option>
+              <option value="EasyPaisa">EasyPaisa</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="Bank">Bank Transfer</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Amount</label>
+            <input id="withdrawAmount" type="number" min="1" placeholder="e.g. 200" required>
+          </div>
+          <button class="btn btn-orange btn-block" style="padding:14px;border:3px solid #B26A00;box-shadow:0 5px 0 #8B5E02">REQUEST WITHDRAW</button>
+        </form>
+      </div>
+
+      <div class="sect-title" style="margin-top:18px">Withdrawal History</div>
+      <div class="table-card">
+        <div class="th-head"><h4>Requests</h4></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead><tbody id="wdBody"></tbody></table></div>
+        <div class="empty" id="wdEmpty" style="display:none"><span class="big">🏦</span>No withdrawal requests yet.</div>
+      </div>
+    </section>
+
+    <section class="page" id="page-transactions">
+      <div class="sect-title">Transaction History</div>
+      <div class="table-card">
+        <div class="th-head"><h4>All Transactions</h4></div>
+        <div class="tbl-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Amount</th><th>Status</th></tr></thead><tbody id="txBody"></tbody></table></div>
+        <div class="empty" id="txEmpty" style="display:none"><span class="big">🔁</span>No transactions yet.</div>
+      </div>
+    </section>
+
+    <section class="page" id="page-settings">
+      <div class="sect-title">My Account</div>
+      <div class="table-card" style="padding:18px">
+        <div class="set-pill"><span>Name</span><b id="chipName">User</b></div>
+        <div class="set-pill"><span>Email</span><b id="chipEmail">—</b></div>
+        <div class="set-pill"><span>Balance</span><b class="t-green" id="setBalance">₨0.00</b></div>
+        <div class="set-pill"><span>Total Invested</span><b class="t-gold" id="setInvested">₨0.00</b></div>
+        <div class="set-pill"><span>Joined</span><b id="setCreated">—</b></div>
+      </div>
+      <div class="sect-title" style="margin-top:18px">Profile Settings</div>
+      <div class="form-card">
+        <form id="settingsForm">
+          <div class="field"><label>Display Name</label><input id="setName" type="text" placeholder="Your name"></div>
+          <button class="btn btn-green btn-block" style="padding:13px">Save Profile</button>
+        </form>
+        <div style="height:14px"></div>
+        <button class="btn btn-ghost btn-block" style="padding:13px" onclick="logout()">Logout</button>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bottom-nav">
+    <button class="bnav-item active" data-page="dashboard" onclick="go('dashboard')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </button>
+    <button class="bnav-item" data-page="plans" onclick="go('plans')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="3" rx="1"/><path d="M21 9h-6.54a3 3 0 0 0-2.46 1.17L9 14"/><path d="M21 9v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9"/><path d="M21 13h-4l-2 4"/></svg>
+      Invest
+    </button>
+    <button class="bnav-item" data-page="deposit" onclick="go('deposit')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="4" rx="1"/><rect x="2" y="13" width="20" height="7" rx="1"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="16.5" x2="6.01" y2="16.5"/></svg>
+      Deposit
+    </button>
+    <button class="bnav-item" data-page="withdraw" onclick="go('withdraw')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+      Withdraw
+    </button>
+    <button class="bnav-item" data-page="settings" onclick="go('settings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      My
+    </button>
+  </div>
+</div>
+
+<div class="drawer-ov" id="drawerOv" onclick="if(event.target===this)closeDrawer()">
+  <div class="drawer">
+    <div class="dr-head">
+      <div class="dr-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg></div>
+      <div><b>Luxury Brand</b><small>WealthNest Invest</small></div>
+    </div>
+    <div class="dr-item" onclick="go('dashboard');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</div>
+    <div class="dr-item" onclick="go('plans');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Investment Plans</div>
+    <div class="dr-item" onclick="go('investments');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Investment History</div>
+    <div class="dr-item" onclick="go('profits');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>Profit History</div>
+    <div class="dr-item" onclick="go('transactions');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Transactions</div>
+    <div class="dr-item" onclick="go('deposit');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>Deposit</div>
+    <div class="dr-item" onclick="go('withdraw');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>Withdraw</div>
+    <div class="dr-item" onclick="go('settings');closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile & Settings</div>
+    <div class="dr-item logout" onclick="logout();closeDrawer()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</div>
+  </div>
+</div>
+
+<div class="modal-ov" id="investModal">
+  <div class="modal-sheet">
+    <div class="modal-head"><h3 id="invModalTitle">Invest</h3><button class="x" onclick="closeModal('investModal')">✕</button></div>
+    <div class="sub t-mut" id="invModalSub" style="font-size:12px;margin-bottom:12px"></div>
+    <div class="field"><label>Investment Amount</label><input id="invModalAmount" type="number" min="1"></div>
+    <div class="inv-err" id="invModalErr"></div>
+    <div class="preview-box" id="invModalPreview">
+      <div class="pv"><span>Daily Profit</span><b class="t-green" id="pvDaily">₨0.00</b></div>
+      <div class="pv"><span>Duration</span><b id="pvDur">0 days</b></div>
+      <div class="pv"><span>Total Return</span><b class="t-gold" id="pvTotal">₨0.00</b></div>
+    </div>
+    <button class="btn btn-orange btn-block" style="padding:14px" id="invConfirmBtn" onclick="confirmInvest()">Confirm Investment</button>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBVgLgpWRBEe2TT0Rs-krdppU58W7hX9jc",
+  authDomain: "sgkteam-7c0ee.firebaseapp.com",
+  databaseURL: "https://sgkteam-7c0ee-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "sgkteam-7c0ee",
+  storageBucket: "sgkteam-7c0ee.firebasestorage.app",
+  messagingSenderId: "419009135112",
+  appId: "1:419009135112:web:bd3f1a18358b7cc862c7bd",
+  measurementId: "G-RWXZ4BJ49Q"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.database();
+
+let currentUser = null;
+let userData = null;
+let plans = {};
+let investments = [];
+let deposits = [], withdrawals = [], profits = [], transactions = [];
+const fmt = n => '₨' + Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtDate = ts => new Date(ts).toLocaleString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const MASCOT = 'images/mascot_boy.png';
+
+function toast(msg, type='success'){
+  const el = document.createElement('div');
+  el.className = 'toast '+type;
+  const ic = type==='success'?'✓':(type==='error'?'✕':'ℹ');
+  el.innerHTML = '<div class="t-ic">'+ic+'</div><div>'+msg+'</div>';
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(()=>{ el.classList.add('out'); setTimeout(()=>el.remove(),300); }, 3600);
+}
+
+function switchAuthTab(t){
+  document.getElementById('tabLoginBtn').classList.toggle('active', t==='login');
+  document.getElementById('tabRegBtn').classList.toggle('active', t==='register');
+  document.getElementById('loginForm').classList.toggle('hidden', t!=='login');
+  document.getElementById('regForm').classList.toggle('hidden', t!=='register');
+}
+
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  try {
+    await auth.signInWithEmailAndPassword(email, pass);
+    toast('Welcome back!');
+  } catch(err){
+    toast(prettyAuthErr(err), 'error');
+  }
+});
+
+document.getElementById('regForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, pass);
+    await auth.currentUser.updateProfile({displayName: name});
+    await db.ref('users/'+cred.user.uid).set({
+      name: name, email: email, balance: 0, totalInvested: 0, totalProfit: 0,
+      createdAt: Date.now()
+    });
+    toast('Account created! Welcome to WealthNest.');
+  } catch(err){
+    toast(prettyAuthErr(err), 'error');
+  }
+});
+
+function prettyAuthErr(err){
+  const c = err.code || '';
+  if(c.includes('invalid-email')) return 'Invalid email address.';
+  if(c.includes('user-not-found')) return 'No account found with this email.';
+  if(c.includes('wrong-password')) return 'Incorrect password.';
+  if(c.includes('weak-password')) return 'Password must be at least 6 characters.';
+  if(c.includes('email-already-in-use')) return 'An account with this email already exists.';
+  if(c.includes('too-many-requests')) return 'Too many attempts. Please try again later.';
+  if(c.includes('network')) return 'Network error. Check your connection.';
+  return err.message || 'Something went wrong.';
+}
+
+function logout(){ auth.signOut(); }
+
+auth.onAuthStateChanged(user => {
+  if(user){
+    currentUser = user;
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initUser();
+  } else {
+    currentUser = null; userData = null;
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('authScreen').style.display = 'flex';
+  }
+});
+
+async function initUser(){
+  const snap = await db.ref('users/'+currentUser.uid).once('value');
+  if(!snap.exists()){
+    await db.ref('users/'+currentUser.uid).set({
+      name: currentUser.displayName || 'User',
+      email: currentUser.email,
+      balance: 0, totalInvested: 0, totalProfit: 0,
+      createdAt: Date.now()
+    });
+  }
+  userData = snap.exists() ? snap.val() : (await db.ref('users/'+currentUser.uid).once('value')).val();
+  renderSettings();
+  db.ref('plans').on('value', s => { plans = s.val()||{}; renderPlans(); });
+  db.ref('users/'+currentUser.uid).on('value', s => {
+    if(!s.exists()) return;
+    userData = s.val();
+    renderSettings(); renderDashboard(); renderWithdrawAvail();
+  });
+  db.ref('deposits').orderByChild('uid').equalTo(currentUser.uid).on('value', s => {
+    deposits = toArr(s.val()); renderDeposits(); renderTransactions(); renderDashboard();
+  });
+  db.ref('withdrawals').orderByChild('uid').equalTo(currentUser.uid).on('value', s => {
+    withdrawals = toArr(s.val()); renderWithdrawals(); renderTransactions(); renderDashboard();
+  });
+  db.ref('investments').orderByChild('uid').equalTo(currentUser.uid).on('value', s => {
+    investments = toArr(s.val()); renderInvestments(); renderDashboard();
+  });
+  db.ref('profits').orderByChild('uid').equalTo(currentUser.uid).on('value', s => {
+    profits = toArr(s.val()); renderProfits(); renderDashboard();
+  });
+  db.ref('transactions').orderByChild('uid').equalTo(currentUser.uid).on('value', s => {
+    transactions = toArr(s.val()); renderTransactions();
+  });
+}
+
+const toArr = obj => obj ? Object.keys(obj).map(k => ({id:k, ...obj[k]})) : [];
+
+function renderSettings(){
+  if(!userData) return;
+  document.getElementById('setName').value = userData.name||'';
+  document.getElementById('setBalance').textContent = fmt(userData.balance);
+  document.getElementById('setInvested').textContent = fmt(userData.totalInvested);
+  document.getElementById('setCreated').textContent = new Date(userData.createdAt||Date.now()).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('chipName').textContent = userData.name||'User';
+  document.getElementById('chipEmail').textContent = userData.email||'—';
+}
+
+document.getElementById('settingsForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = document.getElementById('setName').value.trim();
+  if(!name) return toast('Name cannot be empty','error');
+  try{
+    await db.ref('users/'+currentUser.uid+'/name').set(name);
+    if(currentUser) await currentUser.updateProfile({displayName:name});
+    renderSettings();
+    toast('Profile updated');
+  }catch(err){ toast(err.message,'error'); }
+});
+
+function go(page){
+  document.querySelectorAll('.nav-item, .bnav-item').forEach(n => n.classList.toggle('active', n.dataset.page===page));
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id==='page-'+page));
+  if(page==='dashboard') renderDashboard();
+  if(page==='plans') renderPlans();
+  if(page==='investments') renderInvestments();
+  if(page==='profits') renderProfits();
+  if(page==='transactions') renderTransactions();
+  if(page==='withdraw') renderWithdrawAvail();
+  window.scrollTo(0,0);
+}
+
+function toggleDrawer(){ document.getElementById('drawerOv').classList.toggle('open'); }
+function closeDrawer(){ document.getElementById('drawerOv').classList.remove('open'); }
+
+function renderDashboard(){
+  if(!userData) return;
+  document.getElementById('dashBalance').textContent = fmt(userData.balance);
+  document.getElementById('dashInvested').textContent = fmt(userData.totalInvested);
+  document.getElementById('heroTotalProfit').textContent = fmt(userData.totalProfit);
+  const active = investments.filter(i => i.status==='active');
+  document.getElementById('dashActive').textContent = active.length;
+  document.getElementById('heroActiveCount').textContent = active.length + (active.length===1?' active investment':' active investments');
+  const today = profits.filter(p => sameDay(p.date, Date.now())).reduce((s,p)=>s+Number(p.amount||0),0);
+  document.getElementById('dashTodayProfit').textContent = '+' + fmt(today);
+  const body = document.getElementById('dashInvBody');
+  const empty = document.getElementById('dashInvEmpty');
+  if(!active.length){ body.innerHTML=''; empty.style.display='block'; }
+  else{
+    empty.style.display='none';
+    body.innerHTML = active.slice(0,6).map(i => {
+      const total = i.durationDays * Number(i.dailyProfit||0);
+      const pct = Math.min(100, ((Date.now()-i.startDate)/ (86400000*(i.durationDays||1)))*100);
+      return '<tr>'+
+        '<td><b>'+esc(i.planName)+'</b></td>'+
+        '<td class="t-gold">'+fmt(i.amount)+'</td>'+
+        '<td class="t-green">+'+fmt(i.dailyProfit)+'<span class="t-mut">/day</span></td>'+
+        '<td style="min-width:120px"><div class="inv-head"><span class="t-mut">'+Math.round(pct)+'%</span><span class="t-mut">'+fmt(total)+'</span></div>'+
+          '<div class="progress"><i style="width:'+pct.toFixed(1)+'%"></i></div></td>'+
+        '<td class="t-mut">'+fmtDate(i.endDate)+'</td>'+
+      '</tr>';
+    }).join('');
+  }
+}
+
+function renderPlans(){
+  const grid = document.getElementById('plansGrid');
+  const ids = Object.keys(plans);
+  if(!ids.length){ grid.innerHTML = '<div class="empty" style="background:#fff;border-radius:16px"><span class="big">🌱</span>No plans available yet.<br>Check back soon.</div>'; return; }
+  grid.innerHTML = ids.map((id,i) => {
+    const p = plans[id];
+    const dailyMin = Number(p.minAmount)*Number(p.profitRate)/100;
+    const dailyMax = Number(p.maxAmount)*Number(p.profitRate)/100;
+    return '<div class="plan-group">'+
+      '<div class="plan-card">'+
+        '<div class="p-left">'+
+          '<div class="plan-title">'+esc(p.name)+' <span class="leaf">🌿</span></div>'+
+          '<div class="plan-info">Daily <span class="g">'+fmt(dailyMin)+'</span> | Total Profit <span class="g">'+fmt(Number(dailyMin)*Number(p.durationDays))+'</span></div>'+
+          '<div class="plan-buy">PLAN BUY '+fmt(p.minAmount)+'</div>'+
+        '</div>'+
+        '<div class="p-right"><img src="'+MASCOT+'" alt="">'+
+          '<div class="plan-overlay">PL<span class="n">AN</span></div>'+
+        '</div>'+
+      '</div>'+
+      '<button class="purchase-btn" onclick="openInvestModal(\''+id+'\')">PURCHASE</button>'+
+      '<div class="plan-note">Min '+fmt(p.minAmount)+' · Max '+fmt(p.maxAmount)+' · '+Number(p.profitRate)+'% daily for '+p.durationDays+' days</div>'+
+    '</div>';
+  }).join('');
+}
+
+let investPlan = null;
+function openInvestModal(planId){
+  const p = plans[planId];
+  if(!p) return;
+  investPlan = {id:planId, ...p};
+  document.getElementById('invModalTitle').textContent = 'Invest — '+p.name;
+  document.getElementById('invModalSub').textContent = 'Min '+fmt(p.minAmount)+' · Max '+fmt(p.maxAmount)+' · '+p.profitRate+'% daily for '+p.durationDays+' days';
+  document.getElementById('invModalAmount').value = p.minAmount;
+  document.getElementById('invModalErr').textContent = '';
+  document.getElementById('invModalPreview').style.display = 'flex';
+  updateInvestPreview();
+  document.getElementById('investModal').classList.add('open');
+}
+function updateInvestPreview(){
+  if(!investPlan) return;
+  const amt = parseFloat(document.getElementById('invModalAmount').value);
+  const daily = isNaN(amt) ? 0 : amt * investPlan.profitRate/100;
+  document.getElementById('pvDaily').textContent = fmt(daily);
+  document.getElementById('pvTotal').textContent = fmt(daily * investPlan.durationDays);
+  document.getElementById('pvDur').textContent = investPlan.durationDays + ' days';
+}
+document.getElementById('invModalAmount').addEventListener('input', updateInvestPreview);
+
+async function confirmInvest(){
+  const amt = parseFloat(document.getElementById('invModalAmount').value);
+  const errEl = document.getElementById('invModalErr');
+  if(!investPlan){ closeModal('investModal'); return; }
+  if(isNaN(amt) || amt <= 0){ errEl.textContent = 'Enter a valid amount.'; return; }
+  if(amt < investPlan.minAmount){ errEl.textContent = 'Minimum for this plan is '+fmt(investPlan.minAmount)+'.'; return; }
+  if(amt > investPlan.maxAmount){ errEl.textContent = 'Maximum for this plan is '+fmt(investPlan.maxAmount)+'.'; return; }
+  const bal = Number(userData.balance||0);
+  if(amt > bal){ errEl.textContent = 'Insufficient balance. You have '+fmt(bal)+'.'; return; }
+  const btn = document.getElementById('invConfirmBtn');
+  btn.disabled = true; btn.textContent = 'Processing…';
+  try{
+    const invRef = db.ref('investments').push();
+    const now = Date.now();
+    const endDate = now + investPlan.durationDays*86400000;
+    const inv = {
+      uid: currentUser.uid,
+      planId: investPlan.id,
+      planName: investPlan.name,
+      amount: amt,
+      profitRate: investPlan.profitRate,
+      durationDays: investPlan.durationDays,
+      startDate: now,
+      endDate: endDate,
+      dailyProfit: +(amt*investPlan.profitRate/100).toFixed(2),
+      status: 'active'
+    };
+    await invRef.set(inv);
+    await db.ref('users/'+currentUser.uid).update({
+      balance: +(bal-amt).toFixed(2),
+      totalInvested: +(Number(userData.totalInvested||0)+amt).toFixed(2)
+    });
+    await db.ref('transactions').push({
+      uid: currentUser.uid, type: 'invest', amount: amt, status: 'approved',
+      timestamp: now, note: 'Invested in '+investPlan.name
+    });
+    toast('Investment activated! Daily profit: +'+fmt(inv.dailyProfit));
+    closeModal('investModal');
+  }catch(err){
+    toast('Investment failed: '+err.message,'error');
+  }finally{
+    btn.disabled = false; btn.textContent = 'Confirm Investment';
+  }
+}
+
+function toggleWalletField(kind){
+  const sel = document.getElementById(kind+'Method');
+  const field = document.getElementById(kind+'WalletField');
+  const input = document.getElementById(kind+'WalletId');
+  const label = document.getElementById(kind+'WalletLabel');
+  const m = sel.value;
+  if(m === 'EasyPaisa' || m === 'JazzCash'){
+    label.textContent = m + ' Wallet ID';
+    input.placeholder = 'e.g. 0300 1234567';
+  } else if(m === 'Bank'){
+    label.textContent = 'Bank Account / IBAN';
+    input.placeholder = 'e.g. Account number or IBAN';
+  } else {
+    label.textContent = 'Wallet ID / Account';
+    input.placeholder = '';
+  }
+  field.style.display = m ? 'block' : 'none';
+  if(!m) input.value = '';
+}
+function payBadge(d){
+  const m = d.paymentMethod || '';
+  const w = d.walletId || '';
+  if(!m && !w) return '<span class="t-mut">—</span>';
+  const icon = m==='EasyPaisa' ? '⚡' : (m==='JazzCash' ? '📱' : '🏦');
+  return '<span class="pay-badge" title="'+esc(w)+'">'+icon+' '+esc(m||'Payment')+'<em>'+(w?esc(w):'')+'</em></span>';
+}
+document.getElementById('depositForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const amt = parseFloat(document.getElementById('depositAmount').value);
+  if(isNaN(amt) || amt <= 0) return toast('Enter a valid amount','error');
+  const method = document.getElementById('depositMethod').value;
+  if(!method) return toast('Select a payment method','error');
+  const walletId = document.getElementById('depositWalletId').value.trim();
+  if(!walletId) return toast('Enter your wallet ID / account details','error');
+  try{
+    const now = Date.now();
+    await db.ref('deposits').push({uid: currentUser.uid, amount: amt, status: 'pending', timestamp: now, paymentMethod: method, walletId: walletId});
+    await db.ref('transactions').push({uid: currentUser.uid, type: 'deposit', amount: amt, status: 'pending', timestamp: now, paymentMethod: method, walletId: walletId});
+    document.getElementById('depositAmount').value='';
+    document.getElementById('depositWalletId').value='';
+    document.getElementById('depositMethod').selectedIndex=0;
+    document.getElementById('depositWalletField').style.display='none';
+    toast('Deposit request submitted — awaiting admin approval');
+  }catch(err){ toast(err.message,'error'); }
+});
+
+document.getElementById('withdrawForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const amt = parseFloat(document.getElementById('withdrawAmount').value);
+  if(isNaN(amt) || amt <= 0) return toast('Enter a valid amount','error');
+  const bal = Number(userData.balance||0);
+  if(amt > bal) return toast('Insufficient balance. Available: '+fmt(bal),'error');
+  const method = document.getElementById('withdrawMethod').value;
+  if(!method) return toast('Select a payment method','error');
+  const walletId = document.getElementById('withdrawWalletId').value.trim();
+  if(!walletId) return toast('Enter your wallet ID / account details','error');
+  try{
+    const now = Date.now();
+    await db.ref('withdrawals').push({uid: currentUser.uid, amount: amt, status: 'pending', timestamp: now, paymentMethod: method, walletId: walletId});
+    await db.ref('transactions').push({uid: currentUser.uid, type: 'withdraw', amount: amt, status: 'pending', timestamp: now, paymentMethod: method, walletId: walletId});
+    document.getElementById('withdrawAmount').value='';
+    document.getElementById('withdrawWalletId').value='';
+    document.getElementById('withdrawMethod').selectedIndex=0;
+    document.getElementById('withdrawWalletField').style.display='none';
+    toast('Withdrawal request submitted — awaiting admin approval');
+  }catch(err){ toast(err.message,'error'); }
+});
+
+function renderDeposits(){
+  const body = document.getElementById('depBody');
+  const empty = document.getElementById('depEmpty');
+  if(!deposits.length){ body.innerHTML=''; empty.style.display='block'; }
+  else{
+    empty.style.display='none';
+    body.innerHTML = deposits.sort((a,b)=>b.timestamp-a.timestamp).map(d =>
+      '<tr><td class="t-mut">'+fmtDate(d.timestamp)+'</td><td class="t-gold">'+fmt(d.amount)+'</td>'+
+      '<td>'+payBadge(d)+'</td>'+
+      '<td><span class="pill '+d.status+'">'+d.status+'</span></td></tr>').join('');
+  }
+}
+function renderWithdrawals(){
+  const body = document.getElementById('wdBody');
+  const empty = document.getElementById('wdEmpty');
+  if(!withdrawals.length){ body.innerHTML=''; empty.style.display='block'; }
+  else{
+    empty.style.display='none';
+    body.innerHTML = withdrawals.sort((a,b)=>b.timestamp-a.timestamp).map(d =>
+      '<tr><td class="t-mut">'+fmtDate(d.timestamp)+'</td><td class="t-red">'+fmt(d.amount)+'</td>'+
+      '<td>'+payBadge(d)+'</td>'+
+      '<td><span class="pill '+d.status+'">'+d.status+'</span></td></tr>').join('');
+  }
+}
+function renderInvestments(){
+  const body = document.getElementById('invBody');
+  const empty = document.getElementById('invEmpty');
+  if(!investments.length){ body.innerHTML=''; empty.style.display='block'; }
+  else{
+    empty.style.display='none';
+    body.innerHTML = investments.sort((a,b)=>b.startDate-a.startDate).map(i =>
+      '<tr><td><b>'+esc(i.planName)+'</b></td><td class="t-gold">'+fmt(i.amount)+'</td>'+
+      '<td>'+i.profitRate+'%</td><td class="t-green">+'+fmt(i.dailyProfit)+'/day</td>'+
+      '<td class="t-mut">'+fmtDate(i.startDate)+'</td><td class="t-mut">'+fmtDate(i.endDate)+'</td>'+
+      '<td><span class="pill '+i.status+'">'+i.status+'</span></td></tr>').join('');
+  }
+}
+function renderProfits(){
+  const body = document.getElementById('profitBody');
+  const empty = document.getElementById('profitEmpty');
+  document.getElementById('profitCount').textContent = profits.length + (profits.length===1?' earning recorded':' earnings recorded');
+  if(!profits.length){ body.innerHTML=''; empty.style.display='block'; }
+  else{
+    empty.style.display='none';
+    body.innerHTML = profits.sort((a,b)=>b.date-a.date).map(p =>
+      '<tr><td class="t-mut">'+fmtDate(p.date)+'</td><td>'+esc(p.planName||'—')+'</td>'+
+      '<td class="t-green">+'+fmt(p.amount)+'</td><td class="t-mut">Daily profit</td></tr>').join('');
+  }
+}
+function renderTransactions(){
+  const body = document.getElementById('txBody');
+  const empty = document.getElementById('txEmpty');
+  if(!transactions.length){ body.innerHTML=''; empty.style.display='block'; }
+  else{
+    empty.style.display='none';
+    body.innerHTML = transactions.sort((a,b)=>b.timestamp-a.timestamp).map(t => {
+      const typeCls = t.type==='deposit'?'t-green':(t.type==='withdraw'?'t-red':'t-gold');
+      const sign = t.type==='withdraw'?'-':(t.type==='profit'?'+':'');
+      return '<tr><td class="t-mut">'+fmtDate(t.timestamp)+'</td>'+
+        '<td><span class="pill '+(t.type==='deposit'?'approved':(t.type==='withdraw'?'rejected':'active'))+'" style="text-transform:capitalize">'+t.type+'</span></td>'+
+        '<td class="'+typeCls+'">'+sign+fmt(t.amount)+'</td>'+
+        '<td><span class="pill '+t.status+'">'+t.status+'</span></td></tr>';
+    }).join('');
+  }
+}
+function renderWithdrawAvail(){
+  const els = document.querySelectorAll('#wdAvail');
+  els.forEach(el => el.textContent = fmt(userData?userData.balance:0));
+}
+
+function sameDay(a,b){
+  const da = new Date(a), db2 = new Date(b);
+  return da.getFullYear()===db2.getFullYear() && da.getMonth()===db2.getMonth() && da.getDate()===db2.getDate();
+}
+function esc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-ov').forEach(m => m.addEventListener('click', e => {
+  if(e.target===m) m.classList.remove('open');
+}));
+
+async function runProfitEngine(){
+  if(!currentUser) return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayTs = today.getTime();
+  try{
+    const active = await db.ref('investments').orderByChild('uid').equalTo(currentUser.uid).once('value');
+    const list = toArr(active.val()).filter(i => i.status==='active');
+    if(!list.length) return;
+    for(const inv of list){
+      const endTs = inv.endDate || (inv.startDate + inv.durationDays*86400000);
+      const done = endTs <= Date.now();
+      if(done){
+        await db.ref('investments/'+inv.id+'/status').set('completed');
+        continue;
+      }
+      const guardKey = 'wn_profit_'+currentUser.uid+'_'+inv.id+'_'+todayTs;
+      let credited = false;
+      try{ credited = localStorage.getItem(guardKey)==='1'; }catch(e){}
+      if(credited) continue;
+      const amt = Number(inv.dailyProfit||0);
+      if(amt <= 0) continue;
+      await db.ref('profits').push({
+        uid: currentUser.uid, investmentId: inv.id, planName: inv.planName,
+        amount: amt, date: Date.now()
+      });
+      await db.ref('users/'+currentUser.uid).update({
+        balance: +((Number(userData&&userData.balance||0))+amt).toFixed(2),
+        totalProfit: +((Number(userData&&userData.totalProfit||0))+amt).toFixed(2)
+      });
+      await db.ref('transactions').push({
+        uid: currentUser.uid, type: 'profit', amount: amt, status: 'approved',
+        timestamp: Date.now(), note: 'Daily profit — '+inv.planName
+      });
+      try{ localStorage.setItem(guardKey,'1'); }catch(e){}
+      toast('Daily profit credited: +'+fmt(amt));
+    }
+  }catch(err){
+    console.error('profit engine:', err);
+  }
+}
+
+auth.onAuthStateChanged(u => {
+  if(u){
+    runProfitEngine();
+    setInterval(() => {
+      const now = new Date(); now.setHours(0,0,0,0);
+      const last = parseInt(localStorage.getItem('wn_profit_day')||'0',10);
+      if(now.getTime() !== last){
+        localStorage.setItem('wn_profit_day', String(now.getTime()));
+        runProfitEngine();
+      }
+    }, 600000);
+  }
+});
+</script>
+</body>
+</html>
