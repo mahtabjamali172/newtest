@@ -275,6 +275,16 @@
         .hist-color-dot.green { background:linear-gradient(135deg,#00E676,#00C853); }
         .hist-color-dot.red { background:linear-gradient(135deg,#FF1744,#D50000); }
 
+        /* ===== ONE-TIME INVITATION POPUP ===== */
+        #invitationPopup { position:fixed; inset:0; background:rgba(0,0,0,0.78); z-index:1200; display:none; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(5px); }
+        #invitationPopup.active { display:flex; animation:inviteFadeIn .3s ease; }
+        .invitation-popup-card { position:relative; width:min(94vw,560px); max-height:92vh; animation:inviteScaleIn .35s cubic-bezier(.175,.885,.32,1.275); }
+        .invitation-popup-image { display:block; width:100%; max-height:82vh; object-fit:contain; border-radius:16px; cursor:pointer; box-shadow:0 12px 45px rgba(0,0,0,.65),0 0 28px rgba(255,215,0,.28); }
+        .invitation-popup-close { position:absolute; top:-10px; right:-7px; width:34px; height:34px; border:2px solid #FFD700; border-radius:50%; background:#1a0a2e; color:#FFD700; font-size:18px; line-height:1; cursor:pointer; z-index:2; box-shadow:0 3px 12px rgba(0,0,0,.5); }
+        .invitation-popup-close:hover { transform:scale(1.08); }
+        @keyframes inviteFadeIn { from{opacity:0} to{opacity:1} }
+        @keyframes inviteScaleIn { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
+
         /* ===== BET POPUP ===== */
         .popup-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; display:none; align-items:flex-end; justify-content:center; backdrop-filter:blur(4px); }
         .popup-overlay.active { display:flex; }
@@ -1491,6 +1501,14 @@
         </div>
     </div>
 
+    <!-- One-time Invitation Popup -->
+    <div id="invitationPopup" role="dialog" aria-modal="true" aria-label="Invitation bonus">
+        <div class="invitation-popup-card">
+            <button class="invitation-popup-close" type="button" aria-label="Ignore invitation" onclick="closeInvitationPopup()">&times;</button>
+            <img class="invitation-popup-image" src="invitation-popup.png" alt="Invitation bonus — tap to open invitation page" onclick="openInvitationPage()">
+        </div>
+    </div>
+
     <!-- Bet Popup -->
     <div class="popup-overlay" id="betPopup">
         <div class="popup-box">
@@ -2449,11 +2467,36 @@
                 await loadAdminSettings();
                 await loadSavedAccounts();
                 initGame();
+                setTimeout(showInvitationPopupOnce, 3000);
             } else {
                 document.getElementById('authScreen').style.display = 'flex';
                 document.getElementById('mainApp').classList.add('hidden');
             }
         });
+
+        // ===================== One-time Invitation Popup =====================
+        const INVITATION_POPUP_SEEN_KEY = 'zwin_invitation_popup_seen';
+
+        function showInvitationPopupOnce() {
+            let alreadySeen = false;
+            try { alreadySeen = localStorage.getItem(INVITATION_POPUP_SEEN_KEY) === '1'; } catch(e) {}
+            if(alreadySeen) return;
+
+            // Mark it before displaying so dismissing it never causes it to reappear.
+            try { localStorage.setItem(INVITATION_POPUP_SEEN_KEY, '1'); } catch(e) {}
+            const popup = document.getElementById('invitationPopup');
+            if(popup) popup.classList.add('active');
+        }
+
+        function closeInvitationPopup() {
+            const popup = document.getElementById('invitationPopup');
+            if(popup) popup.classList.remove('active');
+        }
+
+        function openInvitationPage() {
+            closeInvitationPopup();
+            showPage('profile');
+        }
 
         // ===================== Admin Settings =====================
         async function loadAdminSettings() {
