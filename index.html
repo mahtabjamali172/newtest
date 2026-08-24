@@ -51,8 +51,9 @@
         .auth-bg-orb:nth-child(1) { top:-100px; left:-100px; animation-delay:0s; }
         .auth-bg-orb:nth-child(2) { bottom:-100px; right:-100px; animation-delay:4s; width:400px; height:400px; background:radial-gradient(circle,rgba(233,30,99,0.15),transparent 70%); }
         @keyframes orbFloat { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-30px)} }
+        @keyframes zwinColorFlow { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
 
-        .auth-logo { font-size:42px; font-weight:900; background:linear-gradient(135deg,#FFD700,#7C4DFF,#E91E63); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; letter-spacing:3px; font-family:'Playfair Display',serif; position:relative; z-index:1; }
+        .auth-logo { font-size:42px; font-weight:900; background:linear-gradient(90deg,#ff0080,#ff8c00,#ffe600,#00e676,#00cfff,#7c4dff,#ff0080); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px; letter-spacing:3px; font-family:'Playfair Display',serif; position:relative; z-index:1; animation:zwinColorFlow 4s ease-in-out infinite; }
         .auth-vip-badge { display:inline-flex; align-items:center; gap:4px; background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; font-size:11px; font-weight:800; padding:4px 12px; border-radius:20px; margin-bottom:20px; letter-spacing:2px; position:relative; z-index:1; }
         .auth-sub { color:rgba(124,77,255,0.8); font-size:13px; margin-bottom:30px; letter-spacing:1px; position:relative; z-index:1; }
         .auth-box { background:linear-gradient(135deg,#111,#1a0a2e); border-radius:16px; padding:25px; width:100%; max-width:360px; border:1px solid rgba(124,77,255,0.3); box-shadow:0 10px 40px rgba(0,0,0,0.5),0 0 30px rgba(124,77,255,0.1); position:relative; z-index:1; }
@@ -70,7 +71,7 @@
 
         /* ===== COMPACT HEADER ===== */
         .header { background:linear-gradient(135deg,#1a0a2e 0%,#0f0518 100%); color:#fff; padding:8px 15px; position:sticky; top:0; z-index:100; box-shadow:0 2px 15px rgba(0,0,0,0.3); text-align:center; border-bottom:1px solid rgba(124,77,255,0.25); display:flex; align-items:center; justify-content:space-between; }
-        .header-logo { font-size:18px; font-weight:900; letter-spacing:2px; background:linear-gradient(135deg,#FFD700,#7C4DFF); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-family:'Playfair Display',serif; }
+        .header-logo { font-size:18px; font-weight:900; letter-spacing:2px; background:linear-gradient(90deg,#ff0080,#ff8c00,#ffe600,#00e676,#00cfff,#7c4dff,#ff0080); background-size:300% 100%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-family:'Playfair Display',serif; animation:zwinColorFlow 4s ease-in-out infinite; }
         .header-vip { font-size:8px; background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; padding:1px 6px; border-radius:8px; font-weight:800; vertical-align:middle; margin-left:4px; letter-spacing:1px; }
         .header-icons { display:flex; gap:12px; }
         .header-icons i { font-size:18px; color:#FFD700; }
@@ -169,8 +170,8 @@
             display:none;
             align-items:center;
             justify-content:center;
-            backdrop-filter:blur(8px) saturate(0.3);
-            -webkit-backdrop-filter:blur(8px) saturate(0.3);
+            backdrop-filter:none;
+            -webkit-backdrop-filter:none;
             background:rgba(0,0,0,0.65);
             border-radius:14px;
             animation:lockFadeIn 0.3s ease;
@@ -203,39 +204,55 @@
         @keyframes lockPulse { 0%,100%{box-shadow:0 0 20px rgba(255,23,68,0.5),0 0 40px rgba(255,23,68,0.2)} 50%{box-shadow:0 0 30px rgba(255,23,68,0.7),0 0 60px rgba(255,23,68,0.3)} }
         .bet-lock-countdown {
             display:flex;
-            gap:16px;
+            gap:8px;
             align-items:center;
             justify-content:center;
+            padding:8px 0;
+            border:none;
+            border-radius:0;
+            background:transparent;
+            box-shadow:none;
         }
         .countdown-card {
-            background:#000;
-            border-radius:16px;
-            padding:14px 22px;
-            min-width:110px;
-            height:140px;
+            position:relative;
+            overflow:hidden;
+            background:linear-gradient(145deg,#FFE680 0%,#FFD54A 48%,#FFB300 100%);
+            border-radius:18px;
+            padding:0;
+            width:108px;
+            min-width:108px;
+            height:150px;
             display:flex;
             align-items:center;
             justify-content:center;
-            box-shadow:0 6px 30px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,200,83,0.15);
-            border:2px solid rgba(0,200,83,0.4);
+            box-shadow:0 8px 16px rgba(110,65,0,.35), inset 0 1px 0 rgba(255,255,255,.4), inset 0 -5px 10px rgba(160,90,0,.2);
+            border:1px solid rgba(255,241,154,.7);
+            animation:none;
         }
+        .countdown-card::before { content:''; display:block; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.25),transparent 42%); pointer-events:none; }
         .countdown-card span {
-            font-size:90px;
+            position:relative;
+            z-index:1;
+            font-size:150px;
             font-weight:900;
-            color:#00E676;
-            font-family:'JetBrains Mono',monospace;
+            color:#000;
+            -webkit-text-fill-color:#000;
+            font-family:Arial,'Segoe UI',sans-serif;
             line-height:1;
-            text-shadow:0 0 20px rgba(0,230,118,0.4);
+            filter:drop-shadow(0 3px 2px rgba(126,76,0,.45));
         }
         .countdown-sep {
-            font-size:60px;
+            font-size:82px;
             font-weight:900;
-            color:#fff;
+            color:#E91E63;
             font-family:'JetBrains Mono',monospace;
             line-height:1;
-            text-shadow:0 2px 8px rgba(0,0,0,0.5);
+            text-shadow:0 0 12px rgba(233,30,99,.8);
+            animation:countdownSeparatorBlink .7s ease-in-out infinite;
         }
-        @keyframes countdownPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+        @keyframes countdownCardIn { from{transform:translateY(2px) scale(.98);border-color:rgba(255,215,0,.45)} to{transform:translateY(-2px) scale(1.03);border-color:rgba(233,30,99,.9)} }
+        @keyframes countdownShine { to{transform:translateX(120%)} }
+        @keyframes countdownSeparatorBlink { 0%,100%{opacity:.45} 50%{opacity:1} }
         .bet-lock-text {
             font-size:20px;
             font-weight:800;
@@ -274,16 +291,6 @@
         .hist-color-dot { width:14px; height:14px; border-radius:50%; display:inline-block; box-shadow:0 1px 4px rgba(0,0,0,0.3); }
         .hist-color-dot.green { background:linear-gradient(135deg,#00E676,#00C853); }
         .hist-color-dot.red { background:linear-gradient(135deg,#FF1744,#D50000); }
-
-        /* ===== ONE-TIME INVITATION POPUP ===== */
-        #invitationPopup { position:fixed; inset:0; background:rgba(0,0,0,0.78); z-index:1200; display:none; align-items:center; justify-content:center; padding:16px; backdrop-filter:blur(5px); }
-        #invitationPopup.active { display:flex; animation:inviteFadeIn .3s ease; }
-        .invitation-popup-card { position:relative; width:min(94vw,560px); max-height:92vh; animation:inviteScaleIn .35s cubic-bezier(.175,.885,.32,1.275); }
-        .invitation-popup-image { display:block; width:100%; max-height:82vh; object-fit:contain; border-radius:16px; cursor:pointer; box-shadow:0 12px 45px rgba(0,0,0,.65),0 0 28px rgba(255,215,0,.28); }
-        .invitation-popup-close { position:absolute; top:-10px; right:-7px; width:34px; height:34px; border:2px solid #FFD700; border-radius:50%; background:#1a0a2e; color:#FFD700; font-size:18px; line-height:1; cursor:pointer; z-index:2; box-shadow:0 3px 12px rgba(0,0,0,.5); }
-        .invitation-popup-close:hover { transform:scale(1.08); }
-        @keyframes inviteFadeIn { from{opacity:0} to{opacity:1} }
-        @keyframes inviteScaleIn { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
 
         /* ===== BET POPUP ===== */
         .popup-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; display:none; align-items:flex-end; justify-content:center; backdrop-filter:blur(4px); }
@@ -366,6 +373,23 @@
         .profile-balance-amount { font-size:22px; font-weight:800; color:#FFD700; font-family:'JetBrains Mono',monospace; }
         .profile-refresh-icon { color:#7C4DFF; font-size:16px; cursor:pointer; transition:0.3s; }
         .profile-refresh-icon:hover { transform:rotate(180deg); color:#FFD700; }
+
+        /* ===== DEPOSIT LEVELS ===== */
+        .deposit-levels-card { background:linear-gradient(135deg,#111,#1a0a2e); margin:0 12px 12px; border-radius:14px; padding:16px; border:1px solid rgba(255,215,0,0.22); box-shadow:0 4px 15px rgba(0,0,0,0.25); }
+        .deposit-levels-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
+        .deposit-levels-title { color:#FFD700; font-size:14px; font-weight:800; display:flex; align-items:center; gap:7px; }
+        .deposit-level-badge { background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; border-radius:14px; padding:4px 10px; font-size:11px; font-weight:800; white-space:nowrap; }
+        .deposit-levels-sub { color:#888; font-size:11px; line-height:1.5; margin-bottom:10px; }
+        .deposit-level-progress-bg { height:9px; background:#0a0a0a; border-radius:10px; overflow:hidden; border:1px solid rgba(255,215,0,0.15); }
+        .deposit-level-progress-fill { height:100%; width:0; background:linear-gradient(90deg,#FFD700,#FFA000); border-radius:10px; transition:width .4s ease; }
+        .deposit-level-stats { display:flex; justify-content:space-between; gap:10px; margin-top:7px; color:#888; font-size:11px; }
+        .deposit-level-stats b { color:#FFD700; }
+        .deposit-level-next-reward { margin-top:10px; padding:10px 12px; background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,160,0,0.06)); border:1px solid rgba(255,215,0,0.28); border-radius:9px; color:#ccc; font-size:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+        .deposit-level-next-reward strong { color:#00E676; font-size:16px; font-family:'JetBrains Mono',monospace; white-space:nowrap; }
+        .deposit-level-rewards-list { margin-top:10px; display:grid; gap:6px; }
+        .deposit-level-reward-row { display:flex; justify-content:space-between; gap:8px; padding:7px 9px; border-radius:7px; background:rgba(255,255,255,0.03); color:#888; font-size:10px; }
+        .deposit-level-reward-row b { color:#FFD700; }
+        .deposit-level-reward { margin-top:10px; padding:9px 10px; background:rgba(0,230,118,0.07); border:1px solid rgba(0,230,118,0.18); border-radius:9px; color:#00E676; font-size:11px; }
 
         /* Quick Actions */
         .profile-quick-actions { display:flex; justify-content:space-around; margin:0 12px 12px; background:linear-gradient(135deg,#111,#1a0a2e); border-radius:12px; padding:15px 10px; border:1px solid rgba(124,77,255,0.15); }
@@ -1099,7 +1123,199 @@
             .popup-box { border-radius:16px; animation:fadeIn .3s ease; border:1px solid rgba(124,77,255,0.2); }
             @keyframes fadeIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
         }
-    </style>
+        /* ===== VIP INVITATION BONUS POPUP ===== */
+        #vipInvitePopup { position:fixed; inset:0; z-index:100001; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(0,0,0,0.78); backdrop-filter:blur(5px); }
+        #vipInvitePopup.show { display:flex; animation:vipPopupFadeIn .25s ease forwards; }
+        .vip-invite-card { width:min(360px,100%); overflow:hidden; border:1px solid rgba(255,215,0,.65); border-radius:22px; background:linear-gradient(145deg,#24103f 0%,#12091f 58%,#090909 100%); box-shadow:0 0 35px rgba(255,215,0,.25),0 18px 50px rgba(0,0,0,.65); text-align:center; position:relative; animation:vipPopupScale .3s ease forwards; }
+        .vip-invite-close { position:absolute; top:10px; right:10px; z-index:2; width:30px; height:30px; border:1px solid rgba(255,255,255,.35); border-radius:50%; background:rgba(0,0,0,.45); color:#fff; cursor:pointer; font-size:15px; }
+        .vip-invite-image { display:block; width:100%; height:150px; background:linear-gradient(135deg,#3b1468,#160b28); }
+        .vip-invite-content { padding:18px 18px 16px; }
+        .vip-invite-kicker { color:#FFD700; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; }
+        .vip-invite-title { margin:5px 0 8px; color:#fff; font-family:'Playfair Display',serif; font-size:25px; font-weight:900; }
+        .vip-invite-message { color:#ddd; font-size:14px; line-height:1.5; }
+        .vip-invite-message strong { color:#FFD700; }
+        .vip-invite-bonus { margin:14px 0; padding:10px; border:1px solid rgba(255,215,0,.3); border-radius:12px; background:rgba(255,215,0,.08); color:#FFE44D; font-size:17px; font-weight:900; }
+        .vip-invite-skip { width:100%; padding:11px; border:1px solid rgba(255,255,255,.18); border-radius:10px; background:rgba(255,255,255,.08); color:#fff; cursor:pointer; font-size:13px; font-weight:700; }
+        .vip-invite-skip:hover { background:rgba(255,255,255,.15); }
+        @keyframes vipPopupFadeIn { from{opacity:0} to{opacity:1} }
+        @keyframes vipPopupScale { from{transform:scale(.92)} to{transform:scale(1)} }
+            /* ===== REFERENCE-STYLE WIN/LOSS POPUP ONLY ===== */
+        .vip-result-overlay {
+            background: rgba(0,0,0,0.78);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+        .vip-popup-card {
+            width: min(92vw, 390px);
+            max-width: none;
+            border: none !important;
+            border-radius: 26px;
+            overflow: hidden;
+            padding-top: 52px;
+            isolation: isolate;
+            box-shadow: 0 18px 45px rgba(0,0,0,0.48), 0 0 28px rgba(255,255,255,0.16);
+        }
+        .vip-popup-card.win-card {
+            background: linear-gradient(180deg, #ffbb16 0%, #ff7b18 34%, #ff2134 100%);
+            box-shadow: 0 18px 45px rgba(130,18,0,0.45), 0 0 32px rgba(255,116,0,0.45);
+        }
+        .vip-popup-card.loss-card {
+            background: linear-gradient(180deg, #effaff 0%, #c9e7fb 43%, #86c0f3 100%);
+            box-shadow: 0 18px 45px rgba(20,67,120,0.42), 0 0 32px rgba(120,195,255,0.38);
+        }
+        .vip-popup-card.win-card::before,
+        .vip-popup-card.loss-card::before {
+            inset: 0;
+            border-radius: 26px;
+            padding: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.28), transparent 31%, rgba(0,0,0,0.08));
+            -webkit-mask: none;
+            mask: none;
+            animation: none;
+            z-index: -1;
+        }
+        .vip-icon-area {
+            margin-top: -98px;
+            margin-bottom: 12px;
+        }
+        .vip-icon-circle {
+            width: 116px;
+            height: 116px;
+            border: 9px solid rgba(255,255,255,0.68);
+            outline: 4px solid rgba(44,129,226,0.42);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.28), inset 0 2px 0 rgba(255,255,255,0.72);
+        }
+        .win-card .vip-icon-circle {
+            background: linear-gradient(145deg, #fff178 0%, #ffb300 48%, #ff7b00 100%);
+            outline-color: rgba(255,229,108,0.9);
+        }
+        .loss-card .vip-icon-circle {
+            background: linear-gradient(145deg, #f8fdff 0%, #a9d8ff 48%, #4d9ff0 100%);
+            outline-color: rgba(108,193,255,0.95);
+        }
+        .vip-icon-circle::before,
+        .vip-icon-circle::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            width: 42px;
+            height: 62px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(203,232,255,0.68));
+            border: 2px solid rgba(255,255,255,0.85);
+            border-radius: 70% 18% 70% 18%;
+            z-index: 0;
+            filter: drop-shadow(0 3px 2px rgba(48,105,170,0.22));
+        }
+        .vip-icon-circle::before { left: -38px; transform: rotate(-28deg); }
+        .vip-icon-circle::after { right: -38px; transform: scaleX(-1) rotate(-28deg); }
+        .vip-icon-circle i {
+            position: relative;
+            z-index: 1;
+            font-size: 48px;
+            color: #fff;
+            filter: drop-shadow(0 3px 2px rgba(0,0,0,0.28));
+        }
+        .win-card .vip-icon-circle i { color: #fffdf2; }
+        .loss-card .vip-icon-circle i { color: #fff; }
+        .vip-sparkle { width: 7px; height: 7px; background: #fff !important; box-shadow: 0 0 8px rgba(255,255,255,0.95) !important; }
+        .vip-ribbon {
+            margin: 0;
+            padding: 0 14px;
+            background: transparent !important;
+            box-shadow: none !important;
+            font-size: 32px;
+            line-height: 1.1;
+            letter-spacing: 0;
+            text-shadow: 0 3px 3px rgba(116,25,0,0.28);
+        }
+        .vip-ribbon::before,
+        .vip-ribbon::after { display: none; }
+        .loss-card .vip-ribbon { color: #355d91; text-shadow: 0 2px 2px rgba(255,255,255,0.72); }
+        .vip-ribbon-main { display: block; }
+        .vip-popup-content { padding: 0 22px 22px; }
+        .vip-result-row { margin: 17px 0 13px; gap: 9px; }
+        .vip-result-tag {
+            min-width: 66px;
+            padding: 8px 14px;
+            border: none !important;
+            border-radius: 22px;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 3px 7px rgba(80,22,0,0.18);
+        }
+        .vip-result-tag.rt-color-red { background: #f0194c; }
+        .vip-result-tag.rt-color-green { background: #00b85a; }
+        .vip-result-tag.rt-num,
+        .vip-result-tag.rt-size { background: #f0194c; }
+        .loss-card .vip-result-tag.rt-color-red,
+        .loss-card .vip-result-tag.rt-color-green,
+        .loss-card .vip-result-tag.rt-num,
+        .loss-card .vip-result-tag.rt-size {
+            background: rgba(255,255,255,0.7);
+            color: #38679c;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 3px 7px rgba(57,104,160,0.15);
+        }
+        .vip-win-label { color: rgba(255,255,255,0.92); margin-top: 4px; margin-bottom: 3px; font-size: 17px; letter-spacing: 0; text-transform:none; }
+        .vip-win-amount { color: #e51d4b; font-size: 39px; margin-bottom: 8px; text-shadow: 0 2px 0 rgba(255,255,255,0.18); }
+        .vip-loss-heading { margin-top: 7px; color: #38679c; font: 800 31px/1.1 'Inter',sans-serif; text-shadow: 0 2px 1px rgba(255,255,255,0.72); }
+        .vip-loss-amount { display: none; }
+        .vip-period-info { margin: 2px 0 16px; color: #476d9d; font-size: 14px; line-height: 1.45; }
+        .vip-period-info .period-label { color: inherit; font-size: 14px; margin-bottom: 1px; }
+        .vip-period-info .period-number { color: #355d91; font-size: 15px; }
+        .win-card .vip-period-info { color: rgba(255,255,255,0.95); }
+        .win-card .vip-period-info .period-number { color: #fff; }
+        .vip-continue-btn { display: none; }
+        .vip-auto-close { margin-top: 13px; gap: 7px; }
+        .vip-auto-close-text { color: rgba(255,255,255,0.88); font-size: 13px; }
+        .loss-card .vip-auto-close-text { color: rgba(53,93,145,0.9); }
+        .vip-auto-close-text i.win-check { color: #fff; }
+        .vip-auto-close-text i.loss-x { color: #38679c; }
+        .vip-progress-track { width: 92px; height: 4px; background: rgba(255,255,255,0.4); }
+        .vip-progress-fill.win-fill { background: #fff; }
+        .vip-progress-fill.loss-fill { background: #38679c; }
+        .vip-close-btn { top: 10px; right: 10px; opacity: 0.85; }
+        .win-card .vip-close-btn { background: rgba(125,23,0,0.25); box-shadow:none; }
+        .loss-card .vip-close-btn { background: rgba(46,102,165,0.25); box-shadow:none; color:#315a8c; }
+        @media (max-width: 340px) {
+            .vip-popup-card { width: 92vw; }
+            .vip-icon-circle { width: 98px; height: 98px; }
+            .vip-icon-area { margin-top: -84px; }
+            .vip-ribbon { font-size: 27px; }
+            .vip-result-tag { min-width: 56px; padding: 7px 10px; font-size: 13px; }
+            .vip-win-amount { font-size: 32px; }
+            .vip-loss-heading { font-size: 27px; }
+        }
+        /* ===== EXACT SUPPLIED WIN/LOSS POPUP IMAGES ===== */
+        .vip-popup-card {
+            width: min(92vw, 390px);
+            max-width: none;
+            padding: 0;
+            border: none !important;
+            border-radius: 0;
+            overflow: visible;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+        .vip-popup-card.win-card,
+        .vip-popup-card.loss-card {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .vip-popup-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            border: 0;
+            border-radius: 0;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        .vip-popup-card > :not(.vip-popup-image) {
+            display: none !important;
+        }
+</style>
 </head>
 <body>
     <!-- Loader -->
@@ -1269,6 +1485,7 @@
                     <div class="profile-info">
                         <div class="profile-name-row">
                             <span class="profile-name" id="profileName">User</span>
+                            <span class="profile-vip-badge" id="profileLevelVipBadge" style="display:none;"><i class="fas fa-crown"></i> VIP PREMIUM</span>
                         </div>
                         <div class="profile-uid">UID | <span id="profileUid">-</span> <i class="fas fa-copy" onclick="copyUid()"></i></div>
                         <div class="profile-last-login">Last login: <span id="profileLastLogin">-</span></div>
@@ -1278,11 +1495,24 @@
 
             <!-- Balance Card -->
             <div class="profile-balance-card">
-                <div class="profile-balance-label">Total balance</div>
+                <div class="profile-balance-label"><i class="fas fa-wallet" style="color:#FFD700;margin-right:5px;"></i> Total balance</div>
                 <div class="profile-balance-row">
                     <span class="profile-balance-amount">Rs <span id="profileBalance">0.00</span></span>
                     <i class="fas fa-sync-alt profile-refresh-icon" onclick="refreshBalance()"></i>
                 </div>
+            </div>
+
+            <!-- Deposit Levels - configuration comes from admin settings -->
+            <div class="deposit-levels-card" id="depositLevelsCard">
+                <div class="deposit-levels-head">
+                    <div class="deposit-levels-title"><i class="fas fa-layer-group"></i> Deposit Levels</div>
+                    <div class="deposit-level-badge" id="depositLevelBadge">Level 0</div>
+                </div>
+                <div class="deposit-levels-sub" id="depositLevelDescription">Deposit more to unlock level-up bonuses.</div>
+                <div class="deposit-level-progress-bg"><div class="deposit-level-progress-fill" id="depositLevelProgress"></div></div>
+                <div class="deposit-level-stats"><span>Deposited: <b>Rs <span id="depositLevelTotal">0</span></b></span><span>Next: <b id="depositLevelNext">Rs 0</b></span></div>
+                <div class="deposit-level-next-reward"><span><i class="fas fa-gift" style="color:#FFD700;margin-right:5px;"></i> Next level reward</span><strong id="depositLevelNextReward">Rs 0</strong></div>
+                <div class="deposit-level-rewards-list" id="depositLevelRewardsList"></div>
             </div>
 
             <!-- Quick Actions - Wallet, Deposit, Withdraw, VIP -->
@@ -1380,8 +1610,8 @@
                 </div>
                 <div class="invite-bonus-info">
                     <div>Invite <b>100</b> members who deposit min <b>Rs 500</b></div>
-                    <div class="invite-bonus-amount" id="bonusClaimDisplay">Bonus: Rs 30,000</div>
-                    <button class="auth-btn" id="claimBonusBtn" onclick="claimInvitationBonus()" style="margin-top:10px;display:none;"><i class="fas fa-gift"></i> Claim Rs 30,000 Bonus</button>
+                    <div class="invite-bonus-amount" id="bonusClaimDisplay">Bonus: Rs 300,000</div>
+                    <button class="auth-btn" id="claimBonusBtn" onclick="claimInvitationBonus()" style="margin-top:10px;display:none;"><i class="fas fa-gift"></i> Claim Rs 300,000 Bonus</button>
                 </div>
             </div>
 
@@ -1498,14 +1728,6 @@
             <button class="nav-item active" onclick="showPage('home')" data-page="home"><i class="fas fa-home"></i> Home</button>
             <button class="nav-item" onclick="showPage('transactions')" data-page="transactions"><i class="fas fa-list-alt"></i> History</button>
             <button class="nav-item" onclick="showPage('profile')" data-page="profile"><i class="fas fa-user"></i> Profile</button>
-        </div>
-    </div>
-
-    <!-- One-time Invitation Popup -->
-    <div id="invitationPopup" role="dialog" aria-modal="true" aria-label="Invitation bonus">
-        <div class="invitation-popup-card">
-            <button class="invitation-popup-close" type="button" aria-label="Ignore invitation" onclick="closeInvitationPopup()">&times;</button>
-            <img class="invitation-popup-image" src="invitation-popup.png" alt="Invitation bonus — tap to open invitation page" onclick="openInvitationPage()">
         </div>
     </div>
 
@@ -1709,9 +1931,9 @@
             </div>
             <label class="dw-label">Select Method</label>
             <div class="dw-method">
-                <button class="dw-method-btn active" onclick="selectDwMethod(this,'easypaisa')">Easypaisa</button>
+                <button class="dw-method-btn active" onclick="selectDwMethod(this,'till')">Till ID</button>
+                <button class="dw-method-btn" onclick="selectDwMethod(this,'easypaisa')">Easypaisa</button>
                 <button class="dw-method-btn" onclick="selectDwMethod(this,'jazzcash')">JazzCash</button>
-                <button class="dw-method-btn" onclick="selectDwMethod(this,'till')">Till ID</button>
             </div>
             <label class="dw-label">Your Account Number</label>
             <input type="text" class="dw-input" id="depAccount" placeholder="03XXXXXXXXX">
@@ -1792,13 +2014,13 @@
 
         <!-- Win Popup -->
         <div class="vip-popup-card win-card" id="winPopupBox" style="display:none;">
-            <!-- Close Button -->
-            <button class="vip-close-btn" onclick="closeResultPopup()"><i class="fas fa-times"></i></button>
+            <!-- Exact supplied Win popup image -->
+            <img class="vip-popup-image" src="win-reference.png" alt="Congratulations win result" draggable="false">
 
-            <!-- Crown Icon with Sparkles -->
+            <!-- Previous popup elements retained for JavaScript compatibility -->
             <div class="vip-icon-area">
                 <div class="vip-icon-circle">
-                    <i class="fas fa-crown"></i>
+                    <i class="fas fa-rocket"></i>
                     <!-- Sparkles -->
                     <div class="vip-sparkle"></div>
                     <div class="vip-sparkle"></div>
@@ -1810,7 +2032,7 @@
             </div>
 
             <!-- Ribbon Banner -->
-            <div class="vip-ribbon">You Win</div>
+            <div class="vip-ribbon"><span class="vip-ribbon-main">Congratulations</span></div>
 
             <div class="vip-popup-content">
                 <!-- Result Tags -->
@@ -1821,7 +2043,7 @@
                 </div>
 
                 <!-- Win Amount -->
-                <div class="vip-win-label">Win Amount</div>
+                <div class="vip-win-label">Bonus</div>
                 <div class="vip-win-amount" id="winBonusAmount">Rs 0.00</div>
 
                 <!-- Period Info -->
@@ -1851,13 +2073,13 @@
 
         <!-- Loss Popup -->
         <div class="vip-popup-card loss-card" id="lossPopupBox" style="display:none;">
-            <!-- Close Button -->
-            <button class="vip-close-btn" onclick="closeResultPopup()"><i class="fas fa-times"></i></button>
+            <!-- Exact supplied Loss popup image -->
+            <img class="vip-popup-image" src="loss-reference.png" alt="Sorry lose result" draggable="false">
 
-            <!-- Star Icon with Sparkles -->
+            <!-- Previous popup elements retained for JavaScript compatibility -->
             <div class="vip-icon-area">
                 <div class="vip-icon-circle">
-                    <i class="fas fa-star"></i>
+                    <i class="fas fa-rocket"></i>
                     <!-- Sparkles -->
                     <div class="vip-sparkle"></div>
                     <div class="vip-sparkle"></div>
@@ -1869,7 +2091,7 @@
             </div>
 
             <!-- Ribbon Banner -->
-            <div class="vip-ribbon">You Lose</div>
+            <div class="vip-ribbon"><span class="vip-ribbon-main">Sorry</span></div>
 
             <div class="vip-popup-content">
                 <!-- Result Tags -->
@@ -1879,7 +2101,8 @@
                     <span class="vip-result-tag rt-size" id="lossResultSize">Small</span>
                 </div>
 
-                <!-- Better Luck Message -->
+                <!-- Loss Heading and Amount -->
+                <div class="vip-loss-heading">Lose</div>
                 <div class="vip-loss-amount" id="lossAmount">Better Luck Next Time</div>
 
                 <!-- Period Info -->
@@ -1907,6 +2130,25 @@
             <div class="vip-loss-title" style="display:none;"><span class="loss-muted">LOSS</span></div>
         </div>
     </div>
+    <!-- VIP Invitation Bonus Popup -->
+    <div id="vipInvitePopup" role="dialog" aria-modal="true" aria-label="VIP invitation bonus">
+        <div class="vip-invite-card">
+            <button class="vip-invite-close" type="button" aria-label="Skip invitation bonus" onclick="skipVipInvite()"><i class="fas fa-times"></i></button>
+            <svg class="vip-invite-image" viewBox="0 0 720 300" role="img" aria-label="VIP invitation bonus gift image" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="vipPopupBg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7C4DFF"/><stop offset=".55" stop-color="#32105d"/><stop offset="1" stop-color="#12091f"/></linearGradient><linearGradient id="vipPopupGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3A1"/><stop offset=".5" stop-color="#FFD700"/><stop offset="1" stop-color="#FF9800"/></linearGradient></defs>
+                <rect width="720" height="300" fill="url(#vipPopupBg)"/><circle cx="92" cy="56" r="70" fill="#FFD700" opacity=".12"/><circle cx="638" cy="248" r="120" fill="#E91E63" opacity=".12"/>
+                <path d="M270 104h180v112H270z" rx="12" fill="url(#vipPopupGold)"/><path d="M250 104h220v34H250z" rx="10" fill="#FFE44D"/><path d="M348 104v112" stroke="#FFF8C6" stroke-width="13"/><path d="M360 104c-38-8-57-30-40-48 18-18 51 4 40 48Zm0 0c38-8 57-30 40-48-18-18-51 4-40 48Z" fill="#FFD700" stroke="#FFF3A1" stroke-width="4"/><text x="360" y="262" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="28" font-weight="800" letter-spacing="4">VIP INVITE BONUS</text>
+            </svg>
+            <div class="vip-invite-content">
+                <div class="vip-invite-kicker"><i class="fas fa-crown"></i> Special Invitation</div>
+                <div class="vip-invite-title">Invite &amp; Earn Big</div>
+                <div class="vip-invite-message">Invite <strong>100 valid members</strong> and complete the target to unlock your reward.</div>
+                <div class="vip-invite-bonus">100 Valid Members = Rs 3 Lakh Bonus</div>
+                <button class="vip-invite-skip" type="button" onclick="skipVipInvite()">Skip</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
@@ -1929,12 +2171,27 @@
         // ===================== Global State =====================
         let currentUser = null;
         let userData = null;
+        let vipInviteTimer = null;
+
+        function showVipInvitePopup() {
+            const popup = document.getElementById('vipInvitePopup');
+            if(!popup) return;
+            popup.classList.add('show');
+            clearTimeout(vipInviteTimer);
+            vipInviteTimer = setTimeout(skipVipInvite, 3000);
+        }
+
+        function skipVipInvite() {
+            const popup = document.getElementById('vipInvitePopup');
+            clearTimeout(vipInviteTimer);
+            if(popup) popup.classList.remove('show');
+        }
         let currentPeriod = null;
         let timerInterval = null;
         let selectedBet = null;
         let selectedAmount = 0;
         let currentMultiplier = 1;
-        let dwMethod = 'jazzcash';
+        let dwMethod = 'till';
         let addAccMethod = 'jazzcash';
         let lastTimerValue = -1;
         let shownResults = new Set();
@@ -1950,7 +2207,7 @@
         let timerSynced = false;
 
         // ===================== APP DOWNLOAD CONFIG =====================
-        const APK_DOWNLOAD_URL = 'https://www.mediafire.com/file/20xrmxrojfngs3x/zwin.apk/file';
+        const APK_DOWNLOAD_URL = 'https://www.dropbox.com/scl/fi/5ywm00hqf01yyfh7nivmu/Zwin-1.0.apk?rlkey=98fgmwhwjufmnqm6c8uos0rd9&st=baqubhbn&dl=1';
 
         // ===================== LOCKED RESULTS TRACKER =====================
         // CRITICAL: Once a period result is displayed, it is PERMANENTLY locked.
@@ -2061,7 +2318,7 @@
         const GAME_DURATION = 30;
         const INVITATION_TARGET = 100;
         const INVITATION_MIN_DEPOSIT = 500;
-        const INVITATION_BONUS_AMOUNT = 30000;
+        const INVITATION_BONUS_AMOUNT = 300000;
 
         // ===================== Online/Offline Detection =====================
         function initOnlineDetection() {
@@ -2467,36 +2724,12 @@
                 await loadAdminSettings();
                 await loadSavedAccounts();
                 initGame();
-                setTimeout(showInvitationPopupOnce, 3000);
+                setTimeout(showVipInvitePopup, 250);
             } else {
                 document.getElementById('authScreen').style.display = 'flex';
                 document.getElementById('mainApp').classList.add('hidden');
             }
         });
-
-        // ===================== One-time Invitation Popup =====================
-        const INVITATION_POPUP_SEEN_KEY = 'zwin_invitation_popup_seen';
-
-        function showInvitationPopupOnce() {
-            let alreadySeen = false;
-            try { alreadySeen = localStorage.getItem(INVITATION_POPUP_SEEN_KEY) === '1'; } catch(e) {}
-            if(alreadySeen) return;
-
-            // Mark it before displaying so dismissing it never causes it to reappear.
-            try { localStorage.setItem(INVITATION_POPUP_SEEN_KEY, '1'); } catch(e) {}
-            const popup = document.getElementById('invitationPopup');
-            if(popup) popup.classList.add('active');
-        }
-
-        function closeInvitationPopup() {
-            const popup = document.getElementById('invitationPopup');
-            if(popup) popup.classList.remove('active');
-        }
-
-        function openInvitationPage() {
-            closeInvitationPopup();
-            showPage('profile');
-        }
 
         // ===================== Admin Settings =====================
         async function loadAdminSettings() {
@@ -2634,6 +2867,77 @@
             }
         }
 
+        // ===================== Deposit Levels =====================
+        let depositLevelSettings = { enabled:true, levels:[
+            {level:1, requiredDeposit:5000, bonus:100, monthlyReward:50},
+            {level:2, requiredDeposit:10000, bonus:250, monthlyReward:100},
+            {level:3, requiredDeposit:25000, bonus:750, monthlyReward:250}
+        ]};
+
+        async function loadDepositLevels() {
+            try {
+                const snap = await db.ref('game/settings/depositLevels').once('value');
+                const raw = snap.val();
+                if(raw && Array.isArray(raw.levels)) depositLevelSettings = raw;
+                renderDepositLevels();
+            } catch(e) { console.error('Deposit levels load error:', e); renderDepositLevels(); }
+        }
+
+        function renderDepositLevels() {
+            const card = document.getElementById('depositLevelsCard');
+            if(!card) return;
+            if(depositLevelSettings.enabled === false) { card.style.display = 'none'; return; }
+            card.style.display = 'block';
+            const total = Number(userData && userData.totalDeposited) || 0;
+            const levels = (depositLevelSettings.levels || []).filter(x => Number(x.requiredDeposit) > 0).sort((a,b) => Number(a.requiredDeposit) - Number(b.requiredDeposit));
+            let current = 0, next = levels[0] || null;
+            levels.forEach(item => { if(total >= Number(item.requiredDeposit)) current = Math.max(current, Number(item.level) || 0); });
+            next = levels.find(item => total < Number(item.requiredDeposit)) || null;
+            const previousReq = current > 0 ? Number((levels.find(x => Number(x.level) === current) || {}).requiredDeposit) || 0 : 0;
+            const progress = next ? Math.max(0, Math.min(100, ((total - previousReq) / Math.max(1, Number(next.requiredDeposit) - previousReq)) * 100)) : 100;
+            document.getElementById('depositLevelBadge').textContent = 'Level ' + current;
+            document.getElementById('profileLevelVipBadge').style.display = current >= 5 ? 'inline-flex' : 'none';
+            document.getElementById('depositLevelTotal').textContent = total.toLocaleString();
+            document.getElementById('depositLevelNext').textContent = next ? 'Rs ' + Number(next.requiredDeposit).toLocaleString() : 'MAX';
+            document.getElementById('depositLevelNextReward').textContent = next ? 'Rs ' + Number(next.bonus || 0).toLocaleString() : 'MAX';
+            document.getElementById('depositLevelProgress').style.width = progress + '%';
+            document.getElementById('depositLevelDescription').textContent = next ? 'Deposit Rs ' + Math.max(0, Number(next.requiredDeposit) - total).toLocaleString() + ' more to reach Level ' + next.level + ' and receive Rs ' + Number(next.bonus || 0).toLocaleString() + ' bonus.' : 'You have reached the highest available deposit level.';
+            if(!next) document.getElementById('depositLevelNextReward').textContent = 'MAX';
+
+            const list = document.getElementById('depositLevelRewardsList');
+            list.innerHTML = levels.map(item => '<div class="deposit-level-reward-row"><span>Level ' + Number(item.level) + ' — Deposit Rs ' + Number(item.requiredDeposit).toLocaleString() + '</span><span>Monthly: <b>Rs ' + Number(item.monthlyReward || 0).toLocaleString() + '</b></span></div>').join('');
+        }
+
+        async function claimMonthlyLevelReward() {
+            if(!currentUser || !depositLevelSettings || depositLevelSettings.enabled === false) return;
+            const total = Number(userData && userData.totalDeposited) || 0;
+            const levels = (depositLevelSettings.levels || []).filter(x => Number(x.requiredDeposit) > 0).sort((a,b) => Number(a.requiredDeposit) - Number(b.requiredDeposit));
+            let current = 0, currentItem = null;
+            levels.forEach(item => { if(total >= Number(item.requiredDeposit) && Number(item.level) >= current) { current = Number(item.level); currentItem = item; } });
+            const reward = Number(currentItem && currentItem.monthlyReward) || 0;
+            if(!reward) return toast('No monthly reward is configured for your current level.');
+            const now = new Date();
+            const monthKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+            if(now.getDate() < 1) return toast('Monthly reward will be available on the 1st.');
+            try {
+                const ref = db.ref('users/' + currentUser.uid);
+                const result = await ref.transaction(user => {
+                    if(!user) return user;
+                    if(user.monthlyLevelRewardClaimedMonth === monthKey) return;
+                    user.balance = (Number(user.balance) || 0) + reward;
+                    user.monthlyLevelRewardClaimedMonth = monthKey;
+                    user.monthlyLevelRewardAmount = reward;
+                    return user;
+                });
+                if(!result.committed) return toast('Monthly reward already claimed for this month.');
+                await db.ref('monthlyLevelRewards').push({userId:currentUser.uid, level:current, amount:reward, month:monthKey, timestamp:firebase.database.ServerValue.TIMESTAMP});
+                userData = result.snapshot.val() || userData;
+                updateWalletUI();
+                renderDepositLevels();
+                toast('Monthly reward claimed: Rs ' + reward.toLocaleString(), 'success');
+            } catch(e) { toast('Monthly reward error: ' + e.message, 'error'); }
+        }
+
         // ===================== User Data =====================
         async function loadUserData() {
             if(!currentUser) return;
@@ -2648,8 +2952,9 @@
             // Set UID and last login
             document.getElementById('profileUid').textContent = userData.uid ? userData.uid.substring(0,8).toUpperCase() : (currentUser.uid ? currentUser.uid.substring(0,8).toUpperCase() : '-');
             document.getElementById('profileLastLogin').textContent = new Date().toLocaleString();
-            // Load deposit bonus settings
+            // Load deposit bonus and level settings
             loadDepositBonusSettings();
+            loadDepositLevels();
         }
 
         function copyUid() {
@@ -3589,7 +3894,7 @@
                     let cls = 'ball-red';
                     if(r.color === 'Green') cls = 'ball-green';
                     ball.className = 'h-ball ' + cls;
-                    ball.textContent = r.number;
+                    ball.textContent = Number(r.number) === 0 ? '0' : r.number;
                     ballsContainer.appendChild(ball);
                 });
             }
@@ -3609,7 +3914,7 @@
                     if(numCls.includes('green')) ballCls += ' hist-green';
                     else ballCls += ' hist-red';
                     tr.innerHTML = '<td class="period-cell">' + period + '</td>' +
-                        '<td><span class="' + ballCls + '">' + r.number + '</span></td>' +
+                        '<td><span class="' + ballCls + '">' + (Number(r.number) === 0 ? '0' : r.number) + '</span></td>' +
                         '<td class="' + bsCls + '">' + r.size + '</td>' +
                         '<td><span class="' + dotCls + '"></span></td>';
                     tbody.appendChild(tr);
@@ -3904,10 +4209,10 @@
                 const colorTag = document.getElementById('winResultColor');
                 colorTag.textContent = resultColor;
                 colorTag.className = 'vip-result-tag rt-color-' + (resultColor === 'Green' ? 'green' : 'red');
-                document.getElementById('winResultNumber').textContent = resultNum;
+                document.getElementById('winResultNumber').textContent = Number(resultNum) === 0 ? '0' : resultNum;
                 document.getElementById('winResultSize').textContent = resultSize;
                 document.getElementById('winBonusAmount').textContent = 'Rs ' + (bet.winAmount || 0).toFixed(2);
-                document.getElementById('winPeriodInfo').querySelector('.period-label').textContent = 'Period';
+                document.getElementById('winPeriodInfo').querySelector('.period-label').textContent = 'Period: WinGo 30sec';
                 document.getElementById('winPeriodInfo').querySelector('.period-number').textContent = bet.period || '-';
 
                 // Reset progress bar
@@ -3943,10 +4248,10 @@
                 const colorTag = document.getElementById('lossResultColor');
                 colorTag.textContent = resultColor;
                 colorTag.className = 'vip-result-tag rt-color-' + (resultColor === 'Green' ? 'green' : 'red');
-                document.getElementById('lossResultNumber').textContent = resultNum;
+                document.getElementById('lossResultNumber').textContent = Number(resultNum) === 0 ? '0' : resultNum;
                 document.getElementById('lossResultSize').textContent = resultSize;
                 document.getElementById('lossAmount').textContent = '-Rs ' + (bet.amount || 0).toFixed(2);
-                document.getElementById('lossPeriodInfo').querySelector('.period-label').textContent = 'Period';
+                document.getElementById('lossPeriodInfo').querySelector('.period-label').textContent = 'Period: WinGo 30sec';
                 document.getElementById('lossPeriodInfo').querySelector('.period-number').textContent = bet.period || '-';
 
                 // Reset progress bar
